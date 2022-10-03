@@ -129,7 +129,7 @@ class Jogadores:
             sleep(1)
             while True :
                 vemail = input('DIGITE SEU EMAIL:')
-                if ((len(vemail)==0) or email.isspace()):
+                if ((len(vemail)==0) or vemail.isspace()):
                     print ('Opss! Digite seu email')
                     continue
                 else:
