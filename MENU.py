@@ -1,18 +1,18 @@
 from FUNÇOES import check,Senha
 from JOGADORES import Jogadores
-
+ 
 def Menu ():
     import sqlite3
     from time import sleep
     from sqlite3 import Error
-    print ('======================')
+    print ('=======================')
     print ('  1- CRIAR ')
     print ('  2- ACESSAR')
     print ('  0- SAIR:')
-    print ('======================')
+    print ('=======================')
     x = '100'
+    x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
-        x= str(input(' ------- AÇÃO ------- \n '))
         if x=='1':
             try:
                 con = sqlite3.connect ('CASSINO (1).db')
@@ -61,24 +61,25 @@ def Menu ():
             continue 
 
 def Menu_acesso(email):
-    print(EMAIL1)
-    print ('======================')
+    print ('=======================')
     print ('  1- ALTERAR')
     print ('  2- DELETAR')
     print ('  0- SAIR:')
-    print ('======================')
+    print ('=======================')
     x = '100'
+    x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
-        x= str(input(' ------- AÇÃO ------- \n '))
         if x=='1':
             conta1 = Jogadores()
-            conta1.Alterar()
+            conta1.Alterar(email)
         if x=='2':
             conta1 = Jogadores()
-            conta1.Deletar()
+            conta1.Deletar(email)
         if x=='0':
             exit()
         else:
             print(' AÇÃO INVÁLIDA ')
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
+
+Menu ()

@@ -1,7 +1,8 @@
 import sqlite3
 from time import sleep
-from FUNÇOES import check,Senha
 from sqlite3 import Error
+from FUNÇOES import check,Senha
+from MENU import Menu, Menu_acesso
 
 def Menu ():
     import sqlite3
@@ -83,9 +84,6 @@ def Menu_acesso(email):
             print(' AÇÃO INVÁLIDA ')
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
-
-
-
 
 class Jogadores:
 
@@ -233,19 +231,22 @@ class Jogadores:
         except Error as ex:
             print (ex)
         else:
+            print(email)
             cursor.execute('SELECT * FROM JOGADORES')
+            sleep(1)
             senha= str(input('SENHA:'))
             cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
             for linha in cursor.fetchall():
                 if linha [1] == senha:
+                            sleep(1)
                             print ('ACESSO PERMITIDO')
                             cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
                             con.commit()
                             print ('- CONTA DELETADA -')
                             exit()
                 else:
+                    sleep(1)
                     print ('ACESSO NEGADO')
                     print ('------------------- ')
                     return Menu_acesso(email)
-
-Menu()
+                    
