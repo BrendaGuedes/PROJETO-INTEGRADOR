@@ -65,6 +65,7 @@ def Menu ():
             continue 
 
 def Menu_acesso():
+    print(EMAIL1)
     print ('======================')
     print ('  1- ALTERAR')
     print ('  2- DELETAR')
@@ -145,6 +146,7 @@ class Jogadores:
                             print ('- ENCONTRADO -')
                             print ('------------------- ')
                             EMAIL1 = vemail 
+                            print (EMAIL1)
                             sleep(1)
                             senha= str(input('SENHA:'))
                             cursor.execute('SELECT email, senha FROM JOGADORES WHERE email = ?',(EMAIL1,))
@@ -158,6 +160,7 @@ class Jogadores:
                                         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(EMAIL1,))
                                         for linha in cursor.fetchall():
                                             print (f'Ð: {linha[0]}')
+                                            print(EMAIL1)
                                             return Menu_acesso() 
                                 else:
                                     sleep(1)
