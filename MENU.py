@@ -60,7 +60,7 @@ def Menu ():
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
 
-def Menu_acesso():
+def Menu_acesso(email):
     print(EMAIL1)
     print ('======================')
     print ('  1- ALTERAR')

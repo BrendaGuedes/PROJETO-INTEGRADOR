@@ -3,20 +3,18 @@ from time import sleep
 from FUNÇOES import check,Senha
 from sqlite3 import Error
 
-EMAIL1 = ''
-
 def Menu ():
     import sqlite3
     from time import sleep
     from sqlite3 import Error
-    print ('======================')
+    print ('=======================')
     print ('  1- CRIAR ')
     print ('  2- ACESSAR')
     print ('  0- SAIR:')
-    print ('======================')
+    print ('=======================')
     x = '100'
+    x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
-        x= str(input(' ------- AÇÃO ------- \n '))
         if x=='1':
             try:
                 con = sqlite3.connect ('CASSINO (1).db')
@@ -64,22 +62,21 @@ def Menu ():
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
 
-def Menu_acesso():
-    print(EMAIL1)
-    print ('======================')
+def Menu_acesso(email):
+    print ('=======================')
     print ('  1- ALTERAR')
     print ('  2- DELETAR')
     print ('  0- SAIR:')
-    print ('======================')
+    print ('=======================')
     x = '100'
+    x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
-        x= str(input(' ------- AÇÃO ------- \n '))
         if x=='1':
             conta1 = Jogadores()
-            conta1.Alterar()
+            conta1.Alterar(email)
         if x=='2':
             conta1 = Jogadores()
-            conta1.Deletar()
+            conta1.Deletar(email)
         if x=='0':
             exit()
         else:
@@ -87,9 +84,10 @@ def Menu_acesso():
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
 
+
+
+
 class Jogadores:
-    def __init__(self) -> None:
-        pass
 
     def Criar (self,vemail):
         try:
@@ -145,30 +143,26 @@ class Jogadores:
                             sleep(1)
                             print ('- ENCONTRADO -')
                             print ('------------------- ')
-                            EMAIL1 = vemail 
-                            print (EMAIL1)
                             sleep(1)
                             senha= str(input('SENHA:'))
-                            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email = ?',(EMAIL1,))
+                            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email = ?',(vemail,))
                             for linha in cursor.fetchall():
                                 if linha [1] == senha:
                                     sleep(1)
                                     print ('- ACESSO PERMITIDO -')
-                                    cursor.execute('SELECT nome FROM JOGADORES WHERE email = ?',(EMAIL1,))
+                                    cursor.execute('SELECT nome FROM JOGADORES WHERE email = ?',(vemail,))
                                     for linha in cursor.fetchall():
                                         print (linha[0])
-                                        cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(EMAIL1,))
+                                        cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(vemail,))
                                         for linha in cursor.fetchall():
                                             print (f'Ð: {linha[0]}')
-                                            print(EMAIL1)
-                                            return Menu_acesso() 
+                                            return Menu_acesso(vemail) 
                                 else:
                                     sleep(1)
                                     print ('- ACESSO NEGADO -')
                                     return Menu()
     
-    def Alterar(self):
-        global  EMAIL1
+    def Alterar(self,email):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
             con.execute('PRAGMA foreign_keys = 1') 
@@ -176,15 +170,15 @@ class Jogadores:
         except Error as ex:
             print (ex)
         else:
-            print(EMAIL1)
             cursor.execute('SELECT * FROM JOGADORES')
             while True:
+                print(email)
                 sleep(1)
                 senha= str(input('SENHA:'))
                 if ((len(senha)==0) or senha.isspace()):
                     print ('Opss! Digite sua senha!')
                 else:
-                    cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(EMAIL1,))
+                    cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
                     for linha in cursor.fetchall():
                                 if linha [1] == senha:
                                     print ('- ACESSO PERMITIDO -')
@@ -194,33 +188,33 @@ class Jogadores:
                                             sleep(1)
                                             print ('- ALTERANDO SENHA -')
                                             while True: 
-                                                nova_s= int(input('NOVA SENHA:'))
+                                                nova_s= str(input('NOVA SENHA:'))
                                                 if ((len(nova_s)==0) or nova_s.isspace()):
                                                     print ('Opss! Digite seu nome!')
                                                     continue
                                                 else:
-                                                    cursor.execute('UPDATE JOGADORES SET senha=? WHERE email=?',(nova_s,EMAIL1))
+                                                    cursor.execute('UPDATE JOGADORES SET senha=? WHERE email=?',(nova_s,email))
                                                     con.commit()
                                                     print ('- SENHA ALTERADA -')
                                                     cursor.close()
                                                     con.close()
-                                                    return Menu_acesso()
+                                                    return Menu_acesso(email)
                                         if n == '2':
                                             sleep(1)
                                             print ('- ALTERANDO NOME -')
                                             while True:
-                                                nova_n= int(input('NOVO NOME:'))
+                                                nova_n= str(input('NOVO NOME:'))
                                                 if ((len(nova_n)==0) or nova_n.isspace()):
                                                     print ('Opss! Digite seu nome!')
                                                     continue
                                                 else:
-                                                    cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,EMAIL1))
+                                                    cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,email))
                                                     con.commit
                                                     cursor.close()
                                                     con.close()
-                                                    return Menu_acesso()
+                                                    return Menu_acesso(email)
                                         if n == '3':
-                                            return Menu_acesso()
+                                            return Menu_acesso(email)
                                             exit() 
                                         else:
                                             print ('AÇÃO INVÁLIDA ')
@@ -229,8 +223,29 @@ class Jogadores:
                                 else:
                                     print ('- ACESSO NEGADO -')
                                     print ('------------------- ')
-                                    return Menu_acesso()
-
-
+                                    return Menu_acesso(email)
+    
+    def Deletar(self,email):
+        try:
+            con = sqlite3.connect ('CASSINO (1).db')
+            con.execute('PRAGMA foreign_keys = 1') 
+            cursor = con.cursor() 
+        except Error as ex:
+            print (ex)
+        else:
+            cursor.execute('SELECT * FROM JOGADORES')
+            senha= str(input('SENHA:'))
+            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
+            for linha in cursor.fetchall():
+                if linha [1] == senha:
+                            print ('ACESSO PERMITIDO')
+                            cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
+                            con.commit()
+                            print ('- CONTA DELETADA -')
+                            exit()
+                else:
+                    print ('ACESSO NEGADO')
+                    print ('------------------- ')
+                    return Menu_acesso(email)
 
 Menu()
