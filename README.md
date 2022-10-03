@@ -1,2 +1,2 @@
 # PROJETO INTEGRADOR
- Repositório do projetor integrador sistema de Cassino.
+ Repositório do projetor integrador sistema do Cassino.
