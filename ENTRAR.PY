@@ -1,5 +1,5 @@
 from JOGADORES import Jogadores
-from FUNÇOES import Jogos, check,Msg 
+from FUNÇOES import Jogos,check,Msg 
 
 def Menu_principal():
     import sqlite3

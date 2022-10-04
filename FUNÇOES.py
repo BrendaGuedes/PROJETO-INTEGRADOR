@@ -1,3 +1,9 @@
+import sqlite3
+from sqlite3 import Error
+from CARTEIRA import Carteira
+from JOGADORES import Menu_acesso, Jogadores
+
+
 def Msg():
     print ('=======================')
     print ('\033[0;33m      THE KING  \033[0;m           ')
@@ -24,11 +30,7 @@ def Senha():
     print(f' SENHA GERADA: {senhasegura} ') 
     return senhasegura 
 
-def Carteira(email):
-    import sqlite3
-    from sqlite3 import Error
-    from CARTEIRA import Carteira
-    from JOGADORES import Menu_acesso
+def Money(email):
     print ('\033[0;33m=======================')
     print ('  1- SACAR  ')
     print ('  2- DEPOSITAR')
@@ -49,10 +51,8 @@ def Carteira(email):
             print(' AÇÃO INVÁLIDA ')
             c = str(input(' ------- AÇÃO ------- \n '))
             continue 
-Carteira('teteu@gmail.com')
 
 def Jogos(email):
-    from JOGADORES import Menu_acesso, Jogadores
     print ('\033[0;33m=======================')
     print ('  1- DADOS')
     print ('  2- BLACK JACK')
@@ -76,7 +76,6 @@ def Jogos(email):
             continue 
 
 def Açoes(email):
-    from JOGADORES import Menu_acesso, Jogadores
     print ('\033[0;33m=======================')
     print ('  1- ALTERAR')
     print ('  2- DELETAR')
@@ -99,8 +98,6 @@ def Açoes(email):
             continue 
 
 def Dados(email):
-    import sqlite3
-    from sqlite3 import Error
     try:
         con = sqlite3.connect ('CASSINO (1).db')
         con.execute('PRAGMA foreign_keys = 1') 

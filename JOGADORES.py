@@ -1,7 +1,7 @@
 import sqlite3
 from time import sleep
 from sqlite3 import Error
-from FUNÇOES import check,Senha,Carteira,Dados,Jogos,Açoes
+from FUNÇOES import Msg,check,Senha,Money,Jogos,Açoes,Dados
 
 def Menu ():
     import sqlite3
@@ -74,7 +74,7 @@ def Menu_acesso(email):
     x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
         if x=='1':
-            Carteira(email)  
+            Money(email)  
         if x=='2':
             Jogos(email)
         if x=='3':
