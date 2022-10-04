@@ -6,6 +6,8 @@ def Menu ():
     from time import sleep
     from sqlite3 import Error
     print ('=======================')
+    print ('   THE VEGAS\033[0;31m')
+    print ('=======================')
     print ('  1- CRIAR ')
     print ('  2- ACESSAR')
     print ('  0- SAIR:')
@@ -102,5 +104,5 @@ def Menu_acesso(email):
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
 
-# Menu()
+Menu()
 Menu_acesso('teteu@gmail.com')
