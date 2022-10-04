@@ -147,13 +147,7 @@ class Jogadores:
                                 if linha [1] == senha:
                                     sleep(1)
                                     print ('- ACESSO PERMITIDO -')
-                                    cursor.execute('SELECT nome FROM JOGADORES WHERE email = ?',(vemail,))
-                                    for linha in cursor.fetchall():
-                                        print (linha[0])
-                                        cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(vemail,))
-                                        for linha in cursor.fetchall():
-                                            print (f'Ð: {linha[0]}')
-                                            return Menu_acesso(vemail) 
+                                    return Menu_acesso(vemail) 
                                 else:
                                     sleep(1)
                                     print ('- ACESSO NEGADO -')
