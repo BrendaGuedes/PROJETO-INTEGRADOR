@@ -1,4 +1,4 @@
-from JOGADORES import Jogadores
+from CLASSES import Jogadores
 from FUNÇOES import Jogos,check,Msg 
 
 def Menu_principal():

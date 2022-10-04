@@ -1,7 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-from CARTEIRA import Carteira
-from JOGADORES import Menu_acesso, Jogadores
+from CLASSES import Menu_acesso, Jogadores, Carteira
 
 
 def Msg():
@@ -50,8 +49,7 @@ def Money(email):
         else: 
             print(' AÇÃO INVÁLIDA ')
             c = str(input(' ------- AÇÃO ------- \n '))
-            continue 
-Money('teteu@gmail.com')
+            continue
 
 def Jogos(email):
     print ('\033[0;33m=======================')
@@ -112,3 +110,7 @@ def Dados(email):
         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(email,))
         for linha in cursor.fetchall():
             print (f'Ð: {linha[0]}')
+
+
+
+
