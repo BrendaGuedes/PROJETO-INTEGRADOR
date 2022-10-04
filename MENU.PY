@@ -1,13 +1,11 @@
 from JOGADORES import Jogadores
-from FUNÇOES import check,Senha,Carteira,Dados,Jogos,Açoes
+from FUNÇOES import check,Senha,Carteira,Dados,Jogos,Açoes,Msg
 
 def Menu ():
     import sqlite3
     from time import sleep
     from sqlite3 import Error
-    print ('=======================')
-    print ('   THE VEGAS\033[0;31m')
-    print ('=======================')
+
     print ('  1- CRIAR ')
     print ('  2- ACESSAR')
     print ('  0- SAIR:')

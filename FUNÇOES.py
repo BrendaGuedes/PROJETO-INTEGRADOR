@@ -89,3 +89,9 @@ def Dados(email):
         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(email,))
         for linha in cursor.fetchall():
             print (f'Ð: {linha[0]}')
+
+def Msg():
+    print ('=======================')
+    print ('   THE VEGAS\033[0;31m')
+    print ('=======================')
+    pass 
