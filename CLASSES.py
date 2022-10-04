@@ -1,7 +1,8 @@
+import email
 import sqlite3
 from time import sleep
 from sqlite3 import Error
-from FUNÇOES import Msg,check,Senha,Money,Jogos,Açoes,Dados
+from FUNÇOES import check,Senha,Dados
 
 def Menu ():
     import sqlite3
@@ -40,7 +41,6 @@ def Menu ():
                                 a = input(('Email já cadastrado, retorne ao (1) Menu  ou (2) Cadastre um Email novo! \n '))
                                 if a =='1':
                                     return Menu()
-                                    exit()
                                 if a =='2':                  
                                     continue
                                 else:
@@ -74,11 +74,69 @@ def Menu_acesso(email):
     x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
         if x=='1':
-            Money(email)  
+            print ('\033[0;33m=======================')
+            print ('  1- SACAR  ')
+            print ('  2- DEPOSITAR')
+            print ('  3- MENU   ')
+            print ('=======================\033[0;m')
+            c = '100'
+            c= str(input(' ------- AÇÃO ------- \n '))
+            while c!='3':
+                if c=='1':
+                    conta1 = Carteira(email)
+                    conta1.Sacar()
+                if c=='2':
+                    conta1 = Carteira(email)
+                    conta1.Depositar()
+                if c=='3':
+                    return Menu_acesso()
+                else: 
+                    print(' AÇÃO INVÁLIDA ')
+                    c = str(input(' ------- AÇÃO ------- \n '))
+                    continue 
         if x=='2':
-            Jogos(email)
+            print ('\033[0;33m=======================')
+            print ('  1- DADOS')
+            print ('  2- BLACK JACK')
+            print ('  3- ROLETA')
+            print ('  4- MENU ')
+            print ('=======================\033[0;m')
+            j= '100'
+            j= str(input(' ------- AÇÃO ------- \n '))
+            while j!='0':
+                if j=='1':
+                    pass 
+                if j=='2':
+                    pass 
+                if j=='3':
+                    pass 
+                if j=='4':
+                    return Menu_acesso()
+                else: 
+                    print(' AÇÃO INVÁLIDA ')
+                    j = str(input(' ------- AÇÃO ------- \n '))
+                    continue 
         if x=='3':
-            Açoes(email)
+            print ('\033[0;33m=======================')
+            print ('  1- ALTERAR')
+            print ('  2- DELETAR')
+            print ('  3- MENU   ')
+            print ('=======================\033[0;m')
+            a = '100'
+            a= str(input(' ------- AÇÃO ------- \n '))
+            while a!='0':
+                if  a =='1':
+                    conta1 = Jogadores()
+                    conta1.Alterar(email)
+                if a =='2':
+                    conta1 = Jogadores()
+                    conta1.Deletar(email)
+                if a =='3':
+                    return Menu_acesso()
+                else: 
+                    print(' AÇÃO INVÁLIDA ')
+                    a = str(input(' ------- AÇÃO ------- \n '))
+                    continue 
         if x=='0':
             print ('ENCERRADA AS APOSTAS!')
             exit()
@@ -86,7 +144,6 @@ def Menu_acesso(email):
             print(' AÇÃO INVÁLIDA ')
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
-
 class Jogadores:
     def Criar (self,vemail):
         try:
@@ -251,6 +308,7 @@ class Jogadores:
 class Carteira:
     def __init__(self,email) -> None:
         self.email = email
+        
     def Sacar(self):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
@@ -277,14 +335,14 @@ class Carteira:
                                     x = vlinha[0]
                                     if valor >x:
                                         print('SACAR, não pode ser executado Ð insuficiente.')
-                                        return Menu_acesso
+                                        return Menu_acesso(self.email)
                                     if valor <=x:
                                         print('PROCESSANDO')
                                         x-=valor
                                         cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
                                         con.commit()
                                         print ('- VALOR REMOVIDO DE CARTEIRA -')
-                                        return Menu_acesso
+                                        return Menu_acesso(self.email)
                     else:
                         print('ACESSO NEGADO')
                         continue 
@@ -317,12 +375,11 @@ class Carteira:
                                 cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
                                 con.commit()
                                 print ('- VALOR ADICIONADO A CARTEIRA -')
-                                return Menu_acesso
+                                return Menu_acesso(self.email)
                     else:
                         print('ACESSO NEGADO')
                         continue
 
-Menu()
 
 
 

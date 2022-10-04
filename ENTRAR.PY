@@ -1,10 +1,10 @@
+import sqlite3
+from time import sleep
+from sqlite3 import Error
 from CLASSES import Jogadores
-from FUNÇOES import Jogos,check,Msg 
+from FUNÇOES import Msg,check,Msg 
 
 def Menu_principal():
-    import sqlite3
-    from time import sleep
-    from sqlite3 import Error
     Msg()
     print ('\033[0;33m  1- CRIAR ')
     print ('  2- ACESSAR')
@@ -60,4 +60,4 @@ def Menu_principal():
             print(' AÇÃO INVÁLIDA ')
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
-# Menu_principal()
+Menu_principal()
