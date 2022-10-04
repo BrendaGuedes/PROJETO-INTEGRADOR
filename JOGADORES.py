@@ -1,17 +1,17 @@
 import sqlite3
 from time import sleep
 from sqlite3 import Error
-from FUNÇOES import check,Senha
+from FUNÇOES import check,Senha,Carteira,Dados,Jogos,Açoes
 
 def Menu ():
     import sqlite3
     from time import sleep
     from sqlite3 import Error
-    print ('=======================')
+    print ('\033[0;33m=======================')
     print ('  1- CRIAR ')
     print ('  2- ACESSAR')
     print ('  0- SAIR:')
-    print ('=======================')
+    print ('=======================\033[0;m')
     x = '100'
     x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
@@ -47,8 +47,8 @@ def Menu ():
                                     print(' AÇÃO INVÁLIDA ')
                                     return Menu()
                             else: 
-                                conta = Jogadores()
-                                conta.Criar(vemail)
+                                conta1 = Jogadores()
+                                conta1.Criar(vemail)
                                 exit()
         if x=='2':
             conta1 = Jogadores()
@@ -63,21 +63,24 @@ def Menu ():
             continue 
 
 def Menu_acesso(email):
-    print ('=======================')
-    print ('  1- ALTERAR')
-    print ('  2- DELETAR')
+    Dados ( email )
+    print ('\033[0;33m=======================')
     print ('  0- SAIR:')
-    print ('=======================')
+    print ('  1- CARTEIRA')
+    print ('  2- JOGOS')
+    print ('  3- CONFIGURAÇÕES')
+    print ('=======================\033[0;m')
     x = '100'
     x= str(input(' ------- AÇÃO ------- \n '))
     while x!='0':
         if x=='1':
-            conta1 = Jogadores()
-            conta1.Alterar(email)
+            Carteira(email)  
         if x=='2':
-            conta1 = Jogadores()
-            conta1.Deletar(email)
+            Jogos(email)
+        if x=='3':
+            Açoes(email)
         if x=='0':
+            print ('ENCERRADA AS APOSTAS!')
             exit()
         else:
             print(' AÇÃO INVÁLIDA ')
@@ -85,7 +88,6 @@ def Menu_acesso(email):
             continue 
 
 class Jogadores:
-
     def Criar (self,vemail):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
@@ -182,6 +184,9 @@ class Jogadores:
                                                 nova_s= str(input('NOVA SENHA:'))
                                                 if ((len(nova_s)==0) or nova_s.isspace()):
                                                     print ('Opss! Digite seu nome!')
+                                                    continue
+                                                elif ((len(nova_s)<10)):
+                                                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 11')
                                                     continue
                                                 else:
                                                     cursor.execute('UPDATE JOGADORES SET senha=? WHERE email=?',(nova_s,email))
