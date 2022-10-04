@@ -31,13 +31,14 @@ class Carteira:
                                     x = vlinha[0]
                                     if valor >x:
                                         print('SACAR, não pode ser executado Ð insuficiente.')
+                                        return Menu_acesso
                                     if valor <=x:
                                         print('PROCESSANDO')
                                         x-=valor
                                         cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
                                         con.commit()
                                         print ('- VALOR REMOVIDO DE CARTEIRA -')
-                                        opc =1
+                                        return Menu_acesso
                     else:
                         print('ACESSO NEGADO')
                         continue 
@@ -58,7 +59,7 @@ class Carteira:
                     if linha[1] == senha:
                         while True:
                             try:
-                                valor = int(input("DEPOSITAR::"))
+                                valor = int(input("DEPOSITAR:"))
                             except ValueError:
                                 print("Oops! Número inválido...")
                                 continue
@@ -70,9 +71,7 @@ class Carteira:
                                 cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
                                 con.commit()
                                 print ('- VALOR ADICIONADO A CARTEIRA -')
-                                opc=1 
+                                return Menu_acesso
                     else:
                         print('ACESSO NEGADO')
-                        continue     
-conta1 = Carteira(email)
-conta1.Sacar()
+                        continue

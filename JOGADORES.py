@@ -247,3 +247,14 @@ class Jogadores:
                     print ('ACESSO NEGADO')
                     print ('------------------- ')
                     return Menu_acesso(email)
+
+Menu()
+
+
+
+
+
+
+
+
+

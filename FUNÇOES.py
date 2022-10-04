@@ -51,6 +51,7 @@ def Money(email):
             print(' AÇÃO INVÁLIDA ')
             c = str(input(' ------- AÇÃO ------- \n '))
             continue 
+Money('teteu@gmail.com')
 
 def Jogos(email):
     print ('\033[0;33m=======================')
