@@ -2,7 +2,6 @@ import sqlite3
 from time import sleep
 from sqlite3 import Error
 from FUNÇOES import check,Senha
-from MENU import Menu, Menu_acesso
 
 def Menu ():
     import sqlite3
@@ -249,4 +248,3 @@ class Jogadores:
                     print ('ACESSO NEGADO')
                     print ('------------------- ')
                     return Menu_acesso(email)
-                    
