@@ -221,7 +221,8 @@ class Jogadores:
                                             return Menu_acesso(vemail) 
                                         else:
                                             sleep(1)
-                                            print ('- ACESSO NEGADO -')
+                                            print('- ACESSO NEGADO -')
+                                            print('------------------- ')
                                             return Menu()
     
     def Alterar(self,email):
@@ -316,7 +317,6 @@ class Jogadores:
                                             continue
                                 else:
                                     print ('- ACESSO NEGADO -')
-                                    print ('------------------- ')
                                     return Menu_acesso(email)
     
     def Deletar(self,email):
@@ -350,6 +350,7 @@ class Jogadores:
                                 if linha [1] == senha:
                                             sleep(1)
                                             print ('ACESSO PERMITIDO')
+                                            print ('------------------- ')
                                             cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
                                             con.commit()
                                             Msg_delete()
@@ -359,13 +360,12 @@ class Jogadores:
                                 else:
                                     sleep(1)
                                     print ('ACESSO NEGADO')
-                                    print ('------------------- ')
                                     return Menu_acesso(email)
 
 class Carteira:
     def __init__(self,email) -> None:
         self.email = email
-        
+         
     def Sacar(self):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
