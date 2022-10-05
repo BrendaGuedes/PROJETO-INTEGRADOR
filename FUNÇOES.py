@@ -24,7 +24,7 @@ def Senha():
     tamanho_da_senha = 10
     for i in range(tamanho_da_senha):
         senhasegura += choice(caracters)
-    print(f'SENHA GERADA:\n  {senhasegura} ') 
+    print(f' SENHA GERADA:\n {senhasegura} ') 
     
     return senhasegura 
 

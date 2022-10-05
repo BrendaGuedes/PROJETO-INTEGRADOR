@@ -10,7 +10,7 @@ def Menu ():
     print ('  0- SAIR:')
     print ('=======================\033[0;m')
     x = '100'
-    x= str(input(' ------- AÇÃO ------- \n '))
+    x= str(input(' ------- AÇÃO ------- \n'))
     while x!='eeeeee1000':
         if x=='1':
             try:
@@ -22,10 +22,10 @@ def Menu ():
             else:
                 print ('- CADASTRANDO -')
                 sleep(1)
-            while True:
+                while True:
                     vemail = str(input('CADASTRE SEU EMAIL:'))
                     if ((len(vemail)==0) or vemail.isspace()):
-                        print ('Opss! Digite seu email')
+                        print ('Opss! Digite seu email.')
                         continue
                     elif check(vemail) == False:
                         continue
@@ -34,7 +34,7 @@ def Menu ():
                         cursor.execute('SELECT COUNT (*) FROM JOGADORES WHERE email=?',(vemail,))
                         for linha in cursor.fetchall():
                             if linha[0]==1:
-                                a = input(('Email já cadastrado, retorne ao (1) Menu  ou (2) Cadastre um Email novo! \n '))
+                                a = input(('Email já cadastrado, retorne ao (1) Menu  ou (2) Cadastre um Email novo! \n'))
                                 if a =='1':
                                     return Menu()
                                 if a =='2':                  
@@ -52,11 +52,11 @@ def Menu ():
             exit()
             pass 
         if x=='0':
-                print ('GOLDEN ENCERRADO')
+                print ('GOLDEN ENCERRADO!')
                 exit()
         else:
             print(' AÇÃO INVÁLIDA ')
-            x = str(input(' ------- AÇÃO ------- \n '))
+            x = str(input(' ------- AÇÃO ------- \n'))
             continue 
 
 def Menu_acesso(email):
@@ -69,7 +69,7 @@ def Menu_acesso(email):
     print ('  3- CONFIGURAÇÕES')
     print ('=======================\033[0;m')
     x = '100'
-    x= str(input(' ------- AÇÃO ------- \n '))
+    x= str(input(' ------- AÇÃO ------- \n'))
     while x!='eeeee1000':
         if x=='1':
             print ('\033[0;33m=======================')
@@ -78,7 +78,7 @@ def Menu_acesso(email):
             print ('  3- MENU   ')
             print ('=======================\033[0;m')
             c = '100'
-            c= str(input(' ------- AÇÃO ------- \n '))
+            c= str(input(' ------- AÇÃO ------- \n'))
             while c!='eeeee1000':
                 if c=='1':
                     conta1 = Carteira(email)
@@ -90,7 +90,7 @@ def Menu_acesso(email):
                     return Menu_acesso(email)
                 else: 
                     print(' AÇÃO INVÁLIDA ')
-                    c = str(input(' ------- AÇÃO ------- \n '))
+                    c = str(input(' ------- AÇÃO ------- \n'))
                     continue 
         if x=='2':
             print ('\033[0;33m=======================')
@@ -100,7 +100,7 @@ def Menu_acesso(email):
             print ('  4- MENU ')
             print ('=======================\033[0;m')
             j= '100'
-            j= str(input(' ------- AÇÃO ------- \n '))
+            j= str(input(' ------- AÇÃO ------- \n'))
             while j!='eeeee1000':
                 if j=='1':
                     pass 
@@ -112,7 +112,7 @@ def Menu_acesso(email):
                     return Menu_acesso(email)
                 else: 
                     print(' AÇÃO INVÁLIDA ')
-                    j = str(input(' ------- AÇÃO ------- \n '))
+                    j = str(input(' ------- AÇÃO ------- \n'))
                     continue 
         if x=='3':
             print ('\033[0;33m=======================')
@@ -121,7 +121,7 @@ def Menu_acesso(email):
             print ('  3- MENU   ')
             print ('=======================\033[0;m')
             a = '100'
-            a= str(input(' ------- AÇÃO ------- \n '))
+            a= str(input(' ------- AÇÃO ------- \n'))
             while a!='eeeee1000':
                 if  a =='1':
                     conta1 = Jogadores()
@@ -133,14 +133,14 @@ def Menu_acesso(email):
                     return Menu_acesso(email)
                 else: 
                     print(' AÇÃO INVÁLIDA ')
-                    a = str(input(' ------- AÇÃO ------- \n '))
+                    a = str(input(' ------- AÇÃO ------- \n'))
                     continue 
         if x=='0':
             print ('ENCERRADA AS APOSTAS!')
             exit()
         else:
             print(' AÇÃO INVÁLIDA ')
-            x = str(input(' ------- AÇÃO ------- \n '))
+            x = str(input(' ------- AÇÃO ------- \n'))
             continue 
 
 class Jogadores:
@@ -156,10 +156,13 @@ class Jogadores:
             while True:
                 vnome = str(input('NOME:')).upper()
                 if ((len(vnome)==0) or vnome.isspace()):
-                    print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter.!')
+                    print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter.')
                     continue
-                if (len(vnome)>=12):
-                    print('Opss! Excesso de caracter tente um nome menor. ')
+                if (len(vnome)<6):
+                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 6.')
+                    continue
+                if (len(vnome)>=10):
+                    print('Opss! Número de caracter ultrapassado,requerimos pelo menos 10. ')
                     continue
                 else:
                     sleep(1)
@@ -207,7 +210,6 @@ class Jogadores:
                             while True: 
                                 senha= str(input('SENHA:'))
                                 if ((len(senha)==0) or senha.isspace()):
-                                    sleep(1)
                                     print ('Opss! digite sua senha.')
                                     continue
                                 else:
@@ -285,23 +287,29 @@ class Jogadores:
                                                         con.close()
                                                         return Menu_acesso(email)
                                         if n == '2':
-                                                        sleep(1)
-                                                        print ('- ALTERANDO NOME -')
-                                                        while True:
-                                                            nova_n= str(input('NOVO NOME:')).upper()
-                                                            if ((len(nova_n)==0) or nova_n.isspace()):
-                                                                print ('Opss! Digite seu nome!')
-                                                                continue
-                                                            else:
-                                                                cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,email))
-                                                                con.commit()
-                                                                cursor.close()
-                                                                con.close()
-                                                                print ('- NOME ALTERADA -')
-                                                                return Menu_acesso(email)
+                                            sleep(1)
+                                            print ('- ALTERANDO NOME -')
+                                            while True:
+                                                nova_n= str(input('NOVO NOME:')).upper()
+                                                if ((len(nova_n)==0) or nova_n.isspace()):
+                                                    print ('Opss! Digite seu nome!')
+                                                    continue
+                                                if (len(nova_n)<6):
+                                                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 6.')
+                                                    continue
+                                                if (len(nova_n)>=10):
+                                                    print('Opss! Número de caracter ultrapassado,requerimos pelo menos 10. ')
+                                                    continue
+                                                else:
+                                                    cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,email))
+                                                    con.commit()
+                                                    cursor.close()
+                                                    con.close()
+                                                    print ('- NOME ALTERADA -')
+                                                    return Menu_acesso(email)
                                         if n == '3':
-                                                        return Menu_acesso(email)
-                                                        exit() 
+                                            return Menu_acesso(email)
+                                            exit() 
                                         else:
                                             print ('AÇÃO INVÁLIDA ')
                                             print ('-------------------')
@@ -393,7 +401,8 @@ class Carteira:
                                         print ('- VALOR REMOVIDO DE CARTEIRA -')
                                         return Menu_acesso(self.email)
                     else:
-                        print('ACESSO NEGADO')
+                        print('- ACESSO NEGADO -')
+                        print('------------------- ')
                         continue 
 
     def Depositar(self):
@@ -430,6 +439,7 @@ class Carteira:
                                     print ('- VALOR ADICIONADO A CARTEIRA -')
                                     return Menu_acesso(self.email)
                     else:
-                        print('ACESSO NEGADO')
+                        print('- ACESSO NEGADO -')
+                        print('------------------- ')
                         continue
 

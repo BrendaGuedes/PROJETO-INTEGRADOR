@@ -11,7 +11,7 @@ def Menu_principal():
     print ('  0- SAIR:\033[0;m')
     print ('=======================')
     x = '100'
-    x= str(input(' ------- AÇÃO ------- \n '))
+    x= str(input(' ------- AÇÃO ------- \n'))
     while x!='eeeeee1000':
         if x=='1':
             try:
@@ -23,7 +23,7 @@ def Menu_principal():
             else:
                 print ('- CADASTRANDO -')
                 sleep(1)
-            while True:
+                while True:
                     vemail = str(input('CADASTRE SEU EMAIL:'))
                     if ((len(vemail)==0) or vemail.isspace()):
                         print ('Opss! Digite seu email')
@@ -35,7 +35,7 @@ def Menu_principal():
                         cursor.execute('SELECT COUNT (*) FROM JOGADORES WHERE email=?',(vemail,))
                         for linha in cursor.fetchall():
                             if linha[0]==1:
-                                a = input(('Email já cadastrado, retorne ao (1) Menu  ou (2) Cadastre um Email novo! \n '))
+                                a = input(('Email já cadastrado, retorne ao (1) Menu  ou (2) Cadastre um Email novo! \n'))
                                 if a =='1':
                                     return Menu_principal()
                                     exit()
@@ -53,10 +53,12 @@ def Menu_principal():
             conta1.Entrar()
             exit()
         if x=='0':
-            print ('GOLDEN ENCERRADO')
+            sleep(1)
+            print ('GOLDEN ENCERRADO!')
             exit()
         else:
             print(' AÇÃO INVÁLIDA ')
-            x = str(input(' ------- AÇÃO ------- \n '))
+            x = str(input(' ------- AÇÃO ------- \n'))
             continue 
+
 Menu_principal()   
