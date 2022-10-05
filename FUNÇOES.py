@@ -1,4 +1,3 @@
-from platform import java_ver
 import sqlite3
 from sqlite3 import Error
 
