@@ -1,7 +1,7 @@
 import sqlite3
 from time import sleep
 from sqlite3 import Error
-from FUNÇOES import check,Senha,Dados
+from FUNÇOES import check,Senha,Dados,Msg_delete
 
 def Menu ():
     print ('\033[0;33m=======================')
@@ -163,7 +163,7 @@ class Jogadores:
                     continue
                 else:
                     sleep(1)
-                    print ('Uma senha de 10 digitos será gerada, guarde essa senha para acessar o sistema!\n Depois que o sistema for acessado você poderá alterar ou manter essa senha.')
+                    print ('Uma senha de 10 digitos será gerada, guarde essa senha para acessar o sistema!\nDepois que o sistema for acessado você poderá alterar ou manter essa senha.')
                     cursor.execute('INSERT INTO JOGADORES (nome,email,senha) VALUES (?,?,?)',(vnome,vemail,Senha()))
                     cursor.execute('INSERT INTO CARTEIRA (DINAR,email) VALUES (?,?)',(0,vemail))
                     con.commit()
@@ -198,7 +198,7 @@ class Jogadores:
                             sleep(1)
                             print ('Email não econtrado!')
                             print ('-------------------- ')
-                            continue
+                            return Menu()
                         elif linha [0] == 1:
                             sleep(1)
                             print ('- ENCONTRADO -')
@@ -236,7 +236,7 @@ class Jogadores:
             while True:
                 vmail = str(input('CONFIRME SEU EMAIL:'))
                 if ((len(vmail)==0) or vmail.isspace()):
-                    print ('Opss! Digite sua senha.')
+                    print ('Opss! Digite sua email.')
                     continue
                 elif vmail!= email:
                     print ('Opss! Email incorreto, tente novmente.')
@@ -288,7 +288,7 @@ class Jogadores:
                                                         sleep(1)
                                                         print ('- ALTERANDO NOME -')
                                                         while True:
-                                                            nova_n= str(input('NOVO NOME:'))
+                                                            nova_n= str(input('NOVO NOME:')).upper()
                                                             if ((len(nova_n)==0) or nova_n.isspace()):
                                                                 print ('Opss! Digite seu nome!')
                                                                 continue
@@ -344,7 +344,9 @@ class Jogadores:
                                             print ('ACESSO PERMITIDO')
                                             cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
                                             con.commit()
-                                            print ('- CONTA DELETADA -')
+                                            Msg_delete()
+                                            cursor.close()
+                                            con.close()
                                             exit()
                                 else:
                                     sleep(1)
@@ -415,8 +417,8 @@ class Carteira:
                                 print("Oops! Inválido...")
                                 continue
                             else:
-                                if valor > 2000:
-                                    print ('Só adicionamos valores menores, a Ð: 2000.')
+                                if valor > 500:
+                                    print ('Só adicionamos valores menores, a Ð:500.')
                                     continue 
                                 else:
                                     cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))

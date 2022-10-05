@@ -25,7 +25,8 @@ def Senha():
     tamanho_da_senha = 10
     for i in range(tamanho_da_senha):
         senhasegura += choice(caracters)
-    print(f' SENHA GERADA: {senhasegura} ') 
+    print(f'SENHA GERADA:\n  {senhasegura} ') 
+    
     return senhasegura 
 
 def Dados(email):
@@ -36,9 +37,13 @@ def Dados(email):
     except Error as ex:
          print (ex)
     else: 
-        cursor.execute('SELECT nome FROM JOGADORES WHERE email = ?',(email,))
+        cursor.execute('SELECT nome,id FROM JOGADORES WHERE email = ?',(email,))
         for linha in cursor.fetchall():
             print (linha[0])
+            print (f'ID:{linha[1]}')
         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(email,))
         for linha in cursor.fetchall():
-            print (f'Ð: {linha[0]}')
+            print (f'Ð:{linha[0]}')
+
+def Msg_delete():
+    print ('- CONTA DELETADA -\nEsperamos que sua experiência tenha sido boa!\nConfirmamos que sua conta foi deletada do sistema, os dados referentes ao seu email foram todos apagados. ')
