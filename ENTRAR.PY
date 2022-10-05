@@ -52,7 +52,6 @@ def Menu_principal():
             conta1 = Jogadores()
             conta1.Entrar()
             exit()
-            pass 
         if x=='0':
             print ('GOLDEN ENCERRADO')
             exit()

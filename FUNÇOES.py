@@ -7,6 +7,7 @@ def Msg():
     print ('\033[0;33m       GOLDEN   \033[0;m           ')
     print ('=======================')
     print ('')
+
 def check(email):
     import re
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'

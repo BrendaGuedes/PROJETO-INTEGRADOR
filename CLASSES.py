@@ -431,12 +431,3 @@ class Carteira:
                         print('ACESSO NEGADO')
                         continue
 
-
-
-
-
-
-
-
-
-
