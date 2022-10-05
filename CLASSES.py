@@ -15,7 +15,7 @@ def Menu ():
     print ('=======================\033[0;m')
     x = '100'
     x= str(input(' ------- AÇÃO ------- \n '))
-    while x!='0':
+    while x!='eeeeee1000':
         if x=='1':
             try:
                 con = sqlite3.connect ('CASSINO (1).db')
@@ -56,6 +56,7 @@ def Menu ():
             exit()
             pass 
         if x=='0':
+                print ('GOLDEN ENCERRADO')
                 exit()
         else:
             print(' AÇÃO INVÁLIDA ')
@@ -63,6 +64,7 @@ def Menu ():
             continue 
 
 def Menu_acesso(email):
+    print ('=======================\033[0;m')
     Dados ( email )
     print ('\033[0;33m=======================')
     print ('  0- SAIR:')
@@ -72,7 +74,7 @@ def Menu_acesso(email):
     print ('=======================\033[0;m')
     x = '100'
     x= str(input(' ------- AÇÃO ------- \n '))
-    while x!='0':
+    while x!='eeeee1000':
         if x=='1':
             print ('\033[0;33m=======================')
             print ('  1- SACAR  ')
@@ -81,7 +83,7 @@ def Menu_acesso(email):
             print ('=======================\033[0;m')
             c = '100'
             c= str(input(' ------- AÇÃO ------- \n '))
-            while c!='3':
+            while c!='eeeee1000':
                 if c=='1':
                     conta1 = Carteira(email)
                     conta1.Sacar()
@@ -89,7 +91,7 @@ def Menu_acesso(email):
                     conta1 = Carteira(email)
                     conta1.Depositar()
                 if c=='3':
-                    return Menu_acesso()
+                    return Menu_acesso(email)
                 else: 
                     print(' AÇÃO INVÁLIDA ')
                     c = str(input(' ------- AÇÃO ------- \n '))
@@ -103,7 +105,7 @@ def Menu_acesso(email):
             print ('=======================\033[0;m')
             j= '100'
             j= str(input(' ------- AÇÃO ------- \n '))
-            while j!='0':
+            while j!='eeeee1000':
                 if j=='1':
                     pass 
                 if j=='2':
@@ -111,7 +113,7 @@ def Menu_acesso(email):
                 if j=='3':
                     pass 
                 if j=='4':
-                    return Menu_acesso()
+                    return Menu_acesso(email)
                 else: 
                     print(' AÇÃO INVÁLIDA ')
                     j = str(input(' ------- AÇÃO ------- \n '))
@@ -124,7 +126,7 @@ def Menu_acesso(email):
             print ('=======================\033[0;m')
             a = '100'
             a= str(input(' ------- AÇÃO ------- \n '))
-            while a!='0':
+            while a!='eeeee1000':
                 if  a =='1':
                     conta1 = Jogadores()
                     conta1.Alterar(email)
@@ -132,7 +134,7 @@ def Menu_acesso(email):
                     conta1 = Jogadores()
                     conta1.Deletar(email)
                 if a =='3':
-                    return Menu_acesso()
+                    return Menu_acesso(email)
                 else: 
                     print(' AÇÃO INVÁLIDA ')
                     a = str(input(' ------- AÇÃO ------- \n '))
@@ -157,11 +159,13 @@ class Jogadores:
             while True:
                 vnome = str(input('NOME:')).upper()
                 if ((len(vnome)==0) or vnome.isspace()):
-                    print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter!')
+                    print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter.!')
                     continue
+                if (len(vnome)>=12):
+                    print('Opss! Excesso de caracter tente um nome menor. ')
                 else:
                     sleep(1)
-                    print ('Uma senha de 7 digitos será gerada, guarde essa senha para acessar o sistema!')
+                    print ('Uma senha de 10 digitos será gerada, guarde essa senha para acessar o sistema!\n Depois que o sistema for acessado você poderá alterar ou manter essa senha.')
                     cursor.execute('INSERT INTO JOGADORES (nome,email,senha) VALUES (?,?,?)',(vnome,vemail,Senha()))
                     cursor.execute('INSERT INTO CARTEIRA (DINAR,email) VALUES (?,?)',(0,vemail))
                     con.commit()
@@ -187,6 +191,8 @@ class Jogadores:
                 if ((len(vemail)==0) or vemail.isspace()):
                     print ('Opss! Digite seu email')
                     continue
+                elif check(vemail) == False:
+                    continue
                 else:
                     cursor.execute('SELECT COUNT (email), email FROM JOGADORES WHERE email = ?',(vemail,))
                     for linha in cursor.fetchall():
@@ -200,17 +206,22 @@ class Jogadores:
                             print ('- ENCONTRADO -')
                             print ('------------------- ')
                             sleep(1)
-                            senha= str(input('SENHA:'))
-                            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email = ?',(vemail,))
-                            for linha in cursor.fetchall():
-                                if linha [1] == senha:
+                            while True: 
+                                senha= str(input('SENHA:'))
+                                if ((len(senha)==0) or senha.isspace()):
                                     sleep(1)
-                                    print ('- ACESSO PERMITIDO -')
-                                    return Menu_acesso(vemail) 
+                                    print ('Opss! digite sua senha.')
                                 else:
-                                    sleep(1)
-                                    print ('- ACESSO NEGADO -')
-                                    return Menu()
+                                    cursor.execute('SELECT email, senha FROM JOGADORES WHERE email = ?',(vemail,))
+                                    for linha in cursor.fetchall():
+                                        if linha [1] == senha:
+                                            sleep(1)
+                                            print ('- ACESSO PERMITIDO -')
+                                            return Menu_acesso(vemail) 
+                                        else:
+                                            sleep(1)
+                                            print ('- ACESSO NEGADO -')
+                                            return Menu()
     
     def Alterar(self,email):
         try:
@@ -325,9 +336,9 @@ class Carteira:
                     if linha[1] == senha:
                         while True:
                             try:
-                                valor = int(input("SACAR:"))
+                                valor = float(input("SACAR:"))
                             except ValueError:
-                                print("Oops! Número inválido...")
+                                print("Oops! Inválido...")
                                 continue
                             else: 
                                 cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
@@ -363,19 +374,23 @@ class Carteira:
                     if linha[1] == senha:
                         while True:
                             try:
-                                valor = int(input("DEPOSITAR:"))
+                                valor = float(input("DEPOSITAR:"))
                             except ValueError:
-                                print("Oops! Número inválido...")
+                                print("Oops! Inválido...")
                                 continue
-                            else: 
-                                cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
-                                for vlinha in cursor.fetchall():
-                                    x = vlinha[0]             
-                                    x += valor
-                                cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
-                                con.commit()
-                                print ('- VALOR ADICIONADO A CARTEIRA -')
-                                return Menu_acesso(self.email)
+                            else:
+                                if valor > 2000:
+                                    print ('Só adicionamos valores menores, a Ð: 2000.')
+                                    continue 
+                                else:
+                                    cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
+                                    for vlinha in cursor.fetchall():
+                                        x = vlinha[0]             
+                                        x += valor
+                                    cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
+                                    con.commit()
+                                    print ('- VALOR ADICIONADO A CARTEIRA -')
+                                    return Menu_acesso(self.email)
                     else:
                         print('ACESSO NEGADO')
                         continue

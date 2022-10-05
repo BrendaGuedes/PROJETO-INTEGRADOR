@@ -12,7 +12,7 @@ def Menu_principal():
     print ('=======================')
     x = '100'
     x= str(input(' ------- AÇÃO ------- \n '))
-    while x!='0':
+    while x!='eeeeee1000':
         if x=='1':
             try:
                 con = sqlite3.connect ('CASSINO (1).db')
@@ -54,7 +54,7 @@ def Menu_principal():
             exit()
             pass 
         if x=='0':
-            print ('ENCERRADA AS APOSTAS!')
+            print ('GOLDEN ENCERRADO')
             exit()
         else:
             print(' AÇÃO INVÁLIDA ')

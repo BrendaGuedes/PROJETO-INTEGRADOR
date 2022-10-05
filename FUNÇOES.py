@@ -2,17 +2,15 @@ from platform import java_ver
 import sqlite3
 from sqlite3 import Error
 
-
 def Msg():
     print ('=======================')
-    print ('\033[0;33m      THE KING  \033[0;m           ')
+    print ('\033[0;33m       GOLDEN   \033[0;m           ')
     print ('=======================')
 
 def check(email):
     import re
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if(re.fullmatch(regex, email)):
-        print("Email válido")
         return True
     else:
         print("Email inválido")
