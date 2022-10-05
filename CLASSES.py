@@ -1,13 +1,9 @@
-import email
 import sqlite3
 from time import sleep
 from sqlite3 import Error
 from FUNÇOES import check,Senha,Dados
 
 def Menu ():
-    import sqlite3
-    from time import sleep
-    from sqlite3 import Error
     print ('\033[0;33m=======================')
     print ('  1- CRIAR ')
     print ('  2- ACESSAR')
@@ -146,6 +142,7 @@ def Menu_acesso(email):
             print(' AÇÃO INVÁLIDA ')
             x = str(input(' ------- AÇÃO ------- \n '))
             continue 
+
 class Jogadores:
     def Criar (self,vemail):
         try:
@@ -163,6 +160,7 @@ class Jogadores:
                     continue
                 if (len(vnome)>=12):
                     print('Opss! Excesso de caracter tente um nome menor. ')
+                    continue
                 else:
                     sleep(1)
                     print ('Uma senha de 10 digitos será gerada, guarde essa senha para acessar o sistema!\n Depois que o sistema for acessado você poderá alterar ou manter essa senha.')
@@ -211,6 +209,7 @@ class Jogadores:
                                 if ((len(senha)==0) or senha.isspace()):
                                     sleep(1)
                                     print ('Opss! digite sua senha.')
+                                    continue
                                 else:
                                     cursor.execute('SELECT email, senha FROM JOGADORES WHERE email = ?',(vemail,))
                                     for linha in cursor.fetchall():
@@ -232,15 +231,25 @@ class Jogadores:
             print (ex)
         else:
             cursor.execute('SELECT * FROM JOGADORES')
+            print(email)
+            sleep(1)
             while True:
-                print(email)
-                sleep(1)
-                senha= str(input('SENHA:'))
-                if ((len(senha)==0) or senha.isspace()):
-                    print ('Opss! Digite sua senha!')
+                vmail = str(input('CONFIRME SEU EMAIL:'))
+                if ((len(vmail)==0) or vmail.isspace()):
+                    print ('Opss! Digite sua senha.')
+                    continue
+                elif vmail!= email:
+                    print ('Opss! Email incorreto, tente novmente.')
+                    continue
                 else:
-                    cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
-                    for linha in cursor.fetchall():
+                    while True:
+                        senha= str(input('SENHA:'))
+                        if ((len(senha)==0) or senha.isspace()):
+                            print ('Opss! Digite sua senha.')
+                            continue 
+                        else:
+                            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
+                            for linha in cursor.fetchall():
                                 if linha [1] == senha:
                                     print ('- ACESSO PERMITIDO -')
                                     while True:
@@ -251,35 +260,48 @@ class Jogadores:
                                             while True: 
                                                 nova_s= str(input('NOVA SENHA:'))
                                                 if ((len(nova_s)==0) or nova_s.isspace()):
-                                                    print ('Opss! Digite seu nome!')
+                                                    print ('Opss! Digite sua nova senha')
                                                     continue
-                                                elif ((len(nova_s)<10)):
-                                                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 11')
+                                                elif (len(nova_s)<6): 
+                                                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 6.')
                                                     continue
+                                                elif len(nova_s)>11:
+                                                    print ('Opps! Número de caracter ultrapassado, requerimos pelo menos 11.')
                                                 else:
-                                                    cursor.execute('UPDATE JOGADORES SET senha=? WHERE email=?',(nova_s,email))
-                                                    con.commit()
-                                                    print ('- SENHA ALTERADA -')
-                                                    cursor.close()
-                                                    con.close()
-                                                    return Menu_acesso(email)
+                                                    if not any(x.isupper() for x in nova_s):
+                                                        print('Opss! Requerimos pelo menos uma letra maiúscula.')
+                                                        continue 
+                                                    elif not any(x.islower() for x in nova_s):
+                                                        print('Opss! Requirimos pelo menos uma letra minúscula.')
+                                                        continue 
+                                                    elif not any(x.isdigit() for x in nova_s):
+                                                        print('Opss! Requirimos pelo menos um número.')
+                                                        continue 
+                                                    else:
+                                                        cursor.execute('UPDATE JOGADORES SET senha=? WHERE email=?',(nova_s,email))
+                                                        con.commit()
+                                                        print ('- SENHA ALTERADA -')
+                                                        cursor.close()
+                                                        con.close()
+                                                        return Menu_acesso(email)
                                         if n == '2':
-                                            sleep(1)
-                                            print ('- ALTERANDO NOME -')
-                                            while True:
-                                                nova_n= str(input('NOVO NOME:'))
-                                                if ((len(nova_n)==0) or nova_n.isspace()):
-                                                    print ('Opss! Digite seu nome!')
-                                                    continue
-                                                else:
-                                                    cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,email))
-                                                    con.commit
-                                                    cursor.close()
-                                                    con.close()
-                                                    return Menu_acesso(email)
+                                                        sleep(1)
+                                                        print ('- ALTERANDO NOME -')
+                                                        while True:
+                                                            nova_n= str(input('NOVO NOME:'))
+                                                            if ((len(nova_n)==0) or nova_n.isspace()):
+                                                                print ('Opss! Digite seu nome!')
+                                                                continue
+                                                            else:
+                                                                cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,email))
+                                                                con.commit()
+                                                                cursor.close()
+                                                                con.close()
+                                                                print ('- NOME ALTERADA -')
+                                                                return Menu_acesso(email)
                                         if n == '3':
-                                            return Menu_acesso(email)
-                                            exit() 
+                                                        return Menu_acesso(email)
+                                                        exit() 
                                         else:
                                             print ('AÇÃO INVÁLIDA ')
                                             print ('-------------------')
@@ -300,21 +322,35 @@ class Jogadores:
             print(email)
             cursor.execute('SELECT * FROM JOGADORES')
             sleep(1)
-            senha= str(input('SENHA:'))
-            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
-            for linha in cursor.fetchall():
-                if linha [1] == senha:
-                            sleep(1)
-                            print ('ACESSO PERMITIDO')
-                            cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
-                            con.commit()
-                            print ('- CONTA DELETADA -')
-                            exit()
+            while True:
+                vmail = str(input('CONFIRME SEU EMAIL:'))
+                if ((len(vmail)==0) or vmail.isspace()):
+                        print ('Opss! Digite sua email.')
+                        continue
+                elif vmail!= email:
+                    print ('Opss! Email incorreto, tente novmente.')
+                    continue
                 else:
-                    sleep(1)
-                    print ('ACESSO NEGADO')
-                    print ('------------------- ')
-                    return Menu_acesso(email)
+                    while True:
+                        senha= str(input('SENHA:'))
+                        if ((len(senha)==0) or senha.isspace()):
+                                print ('Opss! Digite sua senha.')
+                                continue
+                        else:
+                            cursor.execute('SELECT email, senha FROM JOGADORES WHERE email=?',(email,))
+                            for linha in cursor.fetchall():
+                                if linha [1] == senha:
+                                            sleep(1)
+                                            print ('ACESSO PERMITIDO')
+                                            cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
+                                            con.commit()
+                                            print ('- CONTA DELETADA -')
+                                            exit()
+                                else:
+                                    sleep(1)
+                                    print ('ACESSO NEGADO')
+                                    print ('------------------- ')
+                                    return Menu_acesso(email)
 
 class Carteira:
     def __init__(self,email) -> None:
