@@ -234,7 +234,6 @@ class Jogadores:
             print (ex)
         else:
             cursor.execute('SELECT * FROM JOGADORES')
-            print(email)
             sleep(1)
             while True:
                 vmail = str(input('CONFIRME SEU EMAIL:'))
@@ -365,7 +364,7 @@ class Jogadores:
 class Carteira:
     def __init__(self,email) -> None:
         self.email = email
-         
+
     def Sacar(self):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
@@ -374,8 +373,7 @@ class Carteira:
         except Error as ex:
             print (ex)
         else:
-            opc = 0
-            while opc!=1:
+            while True:
                 senha = str(input('SENHA:'))
                 cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(self.email,))
                 for linha in cursor.fetchall():
@@ -413,8 +411,7 @@ class Carteira:
         except Error as ex:
             print (ex)
         else:
-            opc = 0
-            while opc!=1:
+            while True:
                 senha = str(input('SENHA:'))
                 cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(f"{self.email}",))
                 for linha in cursor.fetchall():
@@ -426,8 +423,8 @@ class Carteira:
                                 print("Oops! Inválido...")
                                 continue
                             else:
-                                if valor > 500:
-                                    print ('Só adicionamos valores menores, a Ð:500.')
+                                if valor > 200:
+                                    print ('Só adicionamos valores menores, a Ð:200.')
                                     continue 
                                 else:
                                     cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
