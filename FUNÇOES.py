@@ -6,7 +6,6 @@ def Msg():
     print ('=======================')
     print ('\033[0;33m       GOLDEN   \033[0;m           ')
     print ('=======================')
-    print ('')
 
 def check(email):
     import re
@@ -39,8 +38,8 @@ def Dados(email):
     else: 
         cursor.execute('SELECT nome,id FROM JOGADORES WHERE email = ?',(email,))
         for linha in cursor.fetchall():
-            print (f'\033[0;32m{linha[0]}\033[0;m')
-            print (f'\033[0;32mID:{linha[1]}\033[0;m')
+            print (f'\033[0;32m  OLÁ {linha[0]}\033[0;m')
+            print (f'\033[0;32m  ID:{linha[1]}\033[0;m')
         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(email,))
         for linha in cursor.fetchall():
-            print (f'\033[0;32mÐ:{linha[0]}\033[0;m')
+            print (f'\033[0;32m  ÐINAR:{linha[0]}\033[0;m')

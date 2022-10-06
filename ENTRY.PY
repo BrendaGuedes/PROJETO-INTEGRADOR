@@ -19,7 +19,7 @@ def Menu_principal():
                 con.execute('PRAGMA foreign_keys = 1') 
                 cursor = con.cursor() 
             except Error as ex:
-                print ('ERRO NO BANCO DE DADOS')
+                print (ex)
             else:
                 print ('- CADASTRANDO -')
                 sleep(1)

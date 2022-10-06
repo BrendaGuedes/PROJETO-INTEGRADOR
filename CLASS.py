@@ -61,14 +61,14 @@ def Menu ():
             continue 
 
 def Menu_acesso(email):
-    print ('=======================\033[0;m')
+    print ('====================\033[0;m')
     Dados (email)
-    print ('\033[0;33m=======================')
-    print ('  0- SAIR:')
+    print ('===              ===')
+    print ('\033[0;33m  0- SAIR:')
     print ('  1- CARTEIRA')
     print ('  2- JOGOS')
-    print ('  3- CONFIGURAÇÕES')
-    print ('=======================\033[0;m')
+    print ('  3- CONFIGURAÇÕES\033[0;m')
+    print ('=======================')
     x = '100'
     x= str(input(' ------- AÇÃO ------- \n'))
     while x!='eeeee1000':
@@ -104,8 +104,7 @@ def Menu_acesso(email):
             j= str(input(' ------- AÇÃO ------- \n'))
             while j!='eeeee1000':
                 if j=='1':
-                    conta1 = Dado(email)
-                    conta1.Guia(email)
+                    Guia(email)
                 if j=='2':
                     pass 
                 if j=='3':
@@ -146,6 +145,7 @@ def Menu_acesso(email):
             continue 
 
 class Jogadores:
+
     def Criar (self,vemail):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
@@ -160,11 +160,11 @@ class Jogadores:
                 if ((len(vnome)==0) or vnome.isspace()):
                     print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter.')
                     continue
-                if (len(vnome)<6):
-                    print ('Opss! Número insuficiente de caracter,requerimos pelo menos 6.')
+                if (len(vnome)<4):
+                    print ('Opss! Número insuficiente de caracter, linite mínimo requerido é 4.')
                     continue
                 if (len(vnome)>=10):
-                    print('Opss! Número de caracter ultrapassado,requerimos pelo menos 10. ')
+                    print('Opss! Número de caracter ultrapassado, limite máximo requerido é 10. ')
                     continue
                 else:
                     sleep(1)
@@ -274,6 +274,9 @@ class Jogadores:
                                                 else:
                                                     if not any(x.isupper() for x in nova_s):
                                                         print('Opss! Requerimos pelo menos uma letra maiúscula.')
+                                                        continue
+                                                    elif any(x.isspace() for x in nova_s):
+                                                        print('Opss! Requirimos que retire os espaços em branco.')
                                                         continue 
                                                     elif not any(x.islower() for x in nova_s):
                                                         print('Opss! Requirimos pelo menos uma letra minúscula.')
@@ -375,34 +378,42 @@ class Carteira:
             print (ex)
         else:
             while True:
-                senha = str(input('SENHA:'))
-                cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(self.email,))
-                for linha in cursor.fetchall():
-                    if linha[1] == senha:
-                        while True:
-                            try:
-                                valor = float(input("SACAR:"))
-                            except ValueError:
-                                print("Opss! Inválido...")
-                                continue
-                            else: 
-                                cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
-                                for vlinha in cursor.fetchall():
-                                    x = vlinha[0]
-                                    if valor >x:
-                                        print('SACAR, não pode ser executado Ð insuficiente.')
-                                        return Menu_acesso(self.email)
-                                    if valor <=x:
-                                        print('PROCESSANDO')
-                                        x-=valor
-                                        cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
-                                        con.commit()
-                                        print ('- VALOR REMOVIDO DE CARTEIRA -')
-                                        return Menu_acesso(self.email)
+                while True:
+                    senha = str(input('SENHA:'))
+                    if ((len(senha)==0) or senha.isspace()):
+                        print ('Opss! Digite seu senha.') 
+                        continue
                     else:
-                        print('- ACESSO NEGADO -')
-                        print('------------------- ')
-                        continue 
+                        cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(self.email,))
+                        for linha in cursor.fetchall():
+                            if linha[1] == senha:
+                                while True:
+                                    try:
+                                        valor = float(input("SACAR:"))
+                                    except ValueError:
+                                        print("Opss! Inválido...")
+                                        continue
+                                    else: 
+                                        cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
+                                        for vlinha in cursor.fetchall():
+                                            x = vlinha[0]
+                                            if valor >x:
+                                                print('SACAR, não pode ser executado Ð insuficiente.')
+                                                return Menu_acesso(self.email)
+                                            elif valor <=0:
+                                                print ('Opss! Informe um valor maior que 0.')
+                                                continue
+                                            elif valor <=x:
+                                                print('PROCESSANDO')
+                                                x-=valor
+                                                cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
+                                                con.commit()
+                                                print ('- VALOR REMOVIDO DE CARTEIRA -')
+                                                return Menu_acesso(self.email)
+                            else:
+                                print('- ACESSO NEGADO -')
+                                print('------------------- ')
+                                return Menu_acesso(self.email) 
 
     def Depositar(self):
         try:
@@ -413,33 +424,41 @@ class Carteira:
             print (ex)
         else:
             while True:
-                senha = str(input('SENHA:'))
-                cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(f"{self.email}",))
-                for linha in cursor.fetchall():
-                    if linha[1] == senha:
-                        while True:
-                            try:
-                                valor = float(input("DEPOSITAR:"))
-                            except ValueError:
-                                print("Opss! Inválido...")
-                                continue
-                            else:
-                                if valor > 200:
-                                    print ('Só adicionamos valores menores, a Ð:200.')
-                                    continue 
-                                else:
-                                    cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
-                                    for vlinha in cursor.fetchall():
-                                        x = vlinha[0]             
-                                        x += valor
-                                    cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
-                                    con.commit()
-                                    print ('- VALOR ADICIONADO A CARTEIRA -')
-                                    return Menu_acesso(self.email)
+                while True:
+                    senha = str(input('SENHA:'))
+                    if ((len(senha)==0) or senha.isspace()):
+                            print ('Opss! Digite seu senha.') 
+                            continue
                     else:
-                        print('- ACESSO NEGADO -')
-                        print('------------------- ')
-                        continue
+                        cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(f"{self.email}",))
+                        for linha in cursor.fetchall():
+                            if linha[1] == senha:
+                                while True:
+                                    try:
+                                        valor = float(input("DEPOSITAR:"))
+                                    except ValueError:
+                                        print("Opss! Inválido...")
+                                        continue
+                                    else:
+                                        if valor > 200:
+                                            print ('Só adicionamos valores menores, a Ð:200.')
+                                            continue 
+                                        elif valor <=0:
+                                            print ('Opss! Informe um valor maior que 0.')
+                                            continue
+                                        else:
+                                            cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
+                                            for vlinha in cursor.fetchall():
+                                                x = vlinha[0]             
+                                                x += valor
+                                            cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
+                                            con.commit()
+                                            print ('- VALOR ADICIONADO A CARTEIRA -')
+                                            return Menu_acesso(self.email)
+                            else:
+                                print('- ACESSO NEGADO -')
+                                print('------------------- ')
+                                return Menu_acesso(self.email)
 
 
 def Verificar(email):
@@ -482,6 +501,43 @@ def Verificar(email):
                             print('APOSTA, não pode ser executado Ð insuficiente.')
                             return Menu_acesso(email)
 
+def Guia(email):
+        try:
+            con = sqlite3.connect ('CASSINO (1).db')
+            con.execute('PRAGMA foreign_keys = 1') 
+            cursor = con.cursor()
+        except Error as ex:
+            print (ex)
+        else:
+            print ('ºººººººººººººººººººººººººººººººººººº')
+            print ('               DADOS                ')
+            print ('ºººººººººººººººººººººººººººººººººººº')
+            print ('O objetivo do jogo é simples você poderá apostar um valor de sua escolha, escolhera os números para representar a sua aposta e os dados \nsortearam valores aleatórios para sobrepor os números da sua aposta, se o valor sorteado e os números da sua aposta forem equivalentes.\nParabéns,você recebera o valor da sua aposta duplicado ou até mesmo quadruplicado.\nSenão você poderá tentar novamente por uma nova opurtunidade de turbinar sua carteira.')
+            sleep(1)
+            print ('- DIFICULDADE -')
+            print ('[1]Facíl\n 2 Dados serão usados para sobreposição do valor! Isso duplica sua aposta.')
+            sleep(1)
+            print ('[2]Médil\n 3 Dados serão usados para a sobreposição do valor! Isso triplica sua aposta.')
+            sleep(1)
+            print ('[3]Difícil\n 5 Dados serão usados para a sobreposição do valor! Isso quadruplica sua aposta.')
+            fase = '100'
+            while fase!='eeeeee1000':
+                fase = str(input('- ESCOLHA A DIFICULDADE DESEJADA: \n'))
+                if fase =='1':
+                    conta1= Dado(email,Verificar(email))
+                    conta1.Facil()
+                if fase =='2':
+                    conta1= Dado(email,Verificar(email))
+                    conta1.Medio()
+                    pass 
+                if fase =='3':
+                    conta1= Dado(email,Verificar(email))
+                    conta1.Dificil()
+                    pass 
+                else: 
+                    print(' AÇÃO INVÁLIDA ')
+                    continue
+
 def aplicar(email,valor):
     try:
         con = sqlite3.connect ('CASSINO (1).db')
@@ -518,43 +574,6 @@ class Dado:
     def __init__(self,email,aposta) -> None:
         self.email = email 
         self.aposta = aposta 
-    def Guia(email):
-        try:
-            con = sqlite3.connect ('CASSINO (1).db')
-            con.execute('PRAGMA foreign_keys = 1') 
-            cursor = con.cursor()
-        except Error as ex:
-            print (ex)
-        else:
-            print ('ºººººººººººººººººººººººººººººººººººº')
-            print ('               DADOS                ')
-            print ('ºººººººººººººººººººººººººººººººººººº')
-            print ('O objetivo do jogo é simples você poderá apostar um valor de sua escolha, escolhera os números para representar a sua aposta e os dados \nsortearam valores aleatórios para sobrepor os números da sua aposta, se o valor sorteado e os números da sua aposta forem equivalentes.\nParabéns,você recebera o valor da sua aposta duplicado ou até mesmo quadruplicado.\nSenão você poderá tentar novamente por uma nova opurtunidade de turbinar sua carteira.')
-            sleep(1)
-            print ('- DIFICULDADE -')
-            print ('[1]Facíl\n 2 Dados serão usados para sobreposição do valor! Isso duplica sua aposta.')
-            sleep(1)
-            print ('[2]Médil\n 3 Dados serão usados para a sobreposição do valor! Isso triplica sua aposta.')
-            sleep(1)
-            print ('[3]Difícil\n 5 Dados serão usados para a sobreposição do valor! Isso quadruplica sua aposta.')
-            fase = '100'
-            while fase!='eeeeee1000':
-                fase = str(input('- ESCOLHA A DIFICULDADE DESEJADA: \n'))
-                if fase =='1':
-                    conta1= Dado(email,Verificar(email))
-                    conta1.Facil()
-                if fase =='2':
-                    conta1= Dado(email,Verificar(email))
-                    conta1.Medio()
-                    pass 
-                if fase =='3':
-                    conta1= Dado(email,Verificar(email))
-                    conta1.Dificil()
-                    pass 
-                else: 
-                    print(' AÇÃO INVÁLIDA ')
-                    continue
-        
     def Facil(self):
         print(' DICA: Os dados sortedos contém 6 lados, a soma total desses dados podem chegar até 12. Então escolha por números que sejam iguais a 12 ou menores que 12.')
         while True:
