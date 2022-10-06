@@ -103,7 +103,7 @@ def Menu_acesso(email):
             j= str(input(' ------- AÇÃO ------- \n'))
             while j!='eeeee1000':
                 if j=='1':
-                    pass 
+                    pass  
                 if j=='2':
                     pass 
                 if j=='3':
@@ -159,7 +159,7 @@ class Jogadores:
                     print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter.')
                     continue
                 if (len(vnome)<6):
-                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 6.')
+                    print ('Opss! Número insuficiente de caracter,requerimos pelo menos 6.')
                     continue
                 if (len(vnome)>=10):
                     print('Opss! Número de caracter ultrapassado,requerimos pelo menos 10. ')
@@ -222,7 +222,6 @@ class Jogadores:
                                         else:
                                             sleep(1)
                                             print('- ACESSO NEGADO -')
-                                            print('------------------- ')
                                             return Menu()
     
     def Alterar(self,email):
@@ -254,8 +253,9 @@ class Jogadores:
                             for linha in cursor.fetchall():
                                 if linha [1] == senha:
                                     print ('- ACESSO PERMITIDO -')
+                                    print ('---------------------')
                                     while True:
-                                        n = input('1 - Alterar senha \n2 - Alterar nome \n3 - SAIR \n...')
+                                        n = input('1 - Alterar senha \n2 - Alterar nome \n3 - SAIR \n')
                                         if n == '1': 
                                             sleep(1)
                                             print ('- ALTERANDO SENHA -')
@@ -265,10 +265,10 @@ class Jogadores:
                                                     print ('Opss! Digite sua nova senha')
                                                     continue
                                                 elif (len(nova_s)<6): 
-                                                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 6.')
+                                                    print ('Opss! Número insuficiente de caracter,requerimos pelo menos 6.')
                                                     continue
                                                 elif len(nova_s)>11:
-                                                    print ('Opps! Número de caracter ultrapassado, requerimos pelo menos 11.')
+                                                    print ('Opss! Número de caracter ultrapassado, requerimos pelo menos 11.')
                                                 else:
                                                     if not any(x.isupper() for x in nova_s):
                                                         print('Opss! Requerimos pelo menos uma letra maiúscula.')
@@ -295,7 +295,7 @@ class Jogadores:
                                                     print ('Opss! Digite seu nome!')
                                                     continue
                                                 if (len(nova_n)<6):
-                                                    print ('Opps! Número insuficiente de caracter,requerimos pelo menos 6.')
+                                                    print ('Opss! Número insuficiente de caracter,requerimos pelo menos 6.')
                                                     continue
                                                 if (len(nova_n)>=10):
                                                     print('Opss! Número de caracter ultrapassado,requerimos pelo menos 10. ')
@@ -349,7 +349,7 @@ class Jogadores:
                                 if linha [1] == senha:
                                             sleep(1)
                                             print ('ACESSO PERMITIDO')
-                                            print ('------------------- ')
+                                            print ('-------------------')
                                             cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
                                             con.commit()
                                             Msg_delete()
@@ -382,7 +382,7 @@ class Carteira:
                             try:
                                 valor = float(input("SACAR:"))
                             except ValueError:
-                                print("Oops! Inválido...")
+                                print("Opss! Inválido...")
                                 continue
                             else: 
                                 cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
@@ -420,7 +420,7 @@ class Carteira:
                             try:
                                 valor = float(input("DEPOSITAR:"))
                             except ValueError:
-                                print("Oops! Inválido...")
+                                print("Opss! Inválido...")
                                 continue
                             else:
                                 if valor > 200:

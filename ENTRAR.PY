@@ -60,5 +60,4 @@ def Menu_principal():
             print(' AÇÃO INVÁLIDA ')
             x = str(input(' ------- AÇÃO ------- \n'))
             continue 
-
 Menu_principal()   

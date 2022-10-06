@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+from time import sleep
 
 def Msg():
     print ('=======================')
@@ -46,3 +47,4 @@ def Dados(email):
 
 def Msg_delete():
     print ('- CONTA DELETADA -\nEsperamos que sua experiência tenha sido boa!\nConfirmamos que sua conta foi deletada do sistema, os dados referentes ao seu email foram todos apagados. ')
+
