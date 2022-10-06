@@ -1,7 +1,7 @@
 import sqlite3
 from time import sleep
 from sqlite3 import Error
-from CLASSES import Jogadores
+from CLASS import Jogadores
 from FUNÇOES import Msg,check,Msg 
 
 def Menu_principal():
@@ -19,7 +19,7 @@ def Menu_principal():
                 con.execute('PRAGMA foreign_keys = 1') 
                 cursor = con.cursor() 
             except Error as ex:
-                print (ex)
+                print ('ERRO NO BANCO DE DADOS')
             else:
                 print ('- CADASTRANDO -')
                 sleep(1)

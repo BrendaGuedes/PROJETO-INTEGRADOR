@@ -39,12 +39,8 @@ def Dados(email):
     else: 
         cursor.execute('SELECT nome,id FROM JOGADORES WHERE email = ?',(email,))
         for linha in cursor.fetchall():
-            print (linha[0])
-            print (f'ID:{linha[1]}')
+            print (f'\033[0;32m{linha[0]}\033[0;m')
+            print (f'\033[0;32mID:{linha[1]}\033[0;m')
         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email = ?',(email,))
         for linha in cursor.fetchall():
-            print (f'Ð:{linha[0]}')
-
-def Msg_delete():
-    print ('- CONTA DELETADA -\nEsperamos que sua experiência tenha sido boa!\nConfirmamos que sua conta foi deletada do sistema, os dados referentes ao seu email foram todos apagados. ')
-
+            print (f'\033[0;32mÐ:{linha[0]}\033[0;m')
