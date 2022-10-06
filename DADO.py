@@ -1,8 +1,7 @@
-import random 
+import random
 import sqlite3
 from sqlite3 import Error
 from time import sleep
-from CLASSES import Menu_acesso
 
 def Verificar(email):
         try:
@@ -74,7 +73,7 @@ def remover(email,valor):
             con.commit()
             return Menu_acesso(email)
 
-def Guia (email):
+def Guia(email):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
             con.execute('PRAGMA foreign_keys = 1') 

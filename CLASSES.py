@@ -1,6 +1,7 @@
 import sqlite3
 from time import sleep
 from sqlite3 import Error
+from DADO import Guia
 from FUNÇOES import check,Senha,Dados,Msg_delete
 
 def Menu ():
@@ -61,7 +62,7 @@ def Menu ():
 
 def Menu_acesso(email):
     print ('=======================\033[0;m')
-    Dados ( email )
+    Dados (email)
     print ('\033[0;33m=======================')
     print ('  0- SAIR:')
     print ('  1- CARTEIRA')
@@ -103,7 +104,7 @@ def Menu_acesso(email):
             j= str(input(' ------- AÇÃO ------- \n'))
             while j!='eeeee1000':
                 if j=='1':
-                    pass  
+                    Guia(email)
                 if j=='2':
                     pass 
                 if j=='3':
