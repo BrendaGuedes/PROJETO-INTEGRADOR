@@ -100,7 +100,7 @@ def Menu_acesso(email):
         if x=='2':
             print ('\033[0;33m=======================')
             print ('  1- DADOS')
-            print ('  2- BLACK JACK')
+            print ('  2- BLACKJACK')
             print ('  3- ROLETA')
             print ('  4- MENU ')
             print ('=======================\033[0;m')
@@ -167,7 +167,7 @@ class Jogadores:
                     print ('Opss! Digite seu nome\nCadrastre um nome usando letras, números ou qualquer outra caracter.')
                     continue
                 if (len(vnome)<4):
-                    print ('Opss! Número insuficiente de caracter, linite mínimo requerido é 4.')
+                    print ('Opss! Número insuficiente de caracter, limite mínimo requerido é 4.')
                     continue
                 if (len(vnome)>=10):
                     print('Opss! Número de caracter ultrapassado, limite máximo requerido é 10. ')
@@ -207,13 +207,13 @@ class Jogadores:
                     for linha in cursor.fetchall():
                         if linha [0] == 0:
                             sleep(1)
-                            print ('Email não econtrado!')
-                            print ('-------------------- ')
+                            print ('EMAIL NÃO ENCONTRADO!')
+                            print ('---------------------')
                             return Menu()
                         elif linha [0] == 1:
                             sleep(1)
                             print ('- ENCONTRADO -')
-                            print ('------------------- ')
+                            print ('-------------------')
                             sleep(1)
                             while True: 
                                 senha= str(input('SENHA:'))
@@ -273,10 +273,11 @@ class Jogadores:
                                                     print ('Opss! Digite sua nova senha')
                                                     continue
                                                 elif (len(nova_s)<6): 
-                                                    print ('Opss! Número insuficiente de caracter,requerimos pelo menos 6.')
+                                                    print ('Opss! Número insuficiente de caracter, limite mínimo requerido é 6.')
                                                     continue
                                                 elif len(nova_s)>11:
-                                                    print ('Opss! Número de caracter ultrapassado, requerimos pelo menos 11.')
+                                                    print ('Opss! Número de caracter ultrapassado, limite máximo requerido é 11.')
+                                                    continue
                                                 else:
                                                     if not any(x.isupper() for x in nova_s):
                                                         print('Opss! Requerimos pelo menos uma letra maiúscula.')
@@ -305,11 +306,11 @@ class Jogadores:
                                                 if ((len(nova_n)==0) or nova_n.isspace()):
                                                     print ('Opss! Digite seu nome!')
                                                     continue
-                                                if (len(nova_n)<6):
-                                                    print ('Opss! Número insuficiente de caracter,requerimos pelo menos 6.')
+                                                if (len(nova_n)<4):
+                                                    print ('Opss! Número insuficiente de caracter, limite mínimo requerido é 4.')
                                                     continue
                                                 if (len(nova_n)>=10):
-                                                    print('Opss! Número de caracter ultrapassado,requerimos pelo menos 10. ')
+                                                    print('Opss! Número de caracter ultrapassado, limite máximo requerido é 10. ')
                                                     continue
                                                 else:
                                                     cursor.execute('UPDATE JOGADORES SET nome=? WHERE email=?',(nova_n,email))
@@ -345,7 +346,7 @@ class Jogadores:
                         print ('Opss! Digite sua email.')
                         continue
                 elif vmail!= email:
-                    print ('Opss! Email incorreto, tente novmente.')
+                    print ('Opss! Email incorreto, tente novamente.')
                     continue
                 else:
                     while True:
@@ -358,7 +359,7 @@ class Jogadores:
                             for linha in cursor.fetchall():
                                 if linha [1] == senha:
                                             sleep(1)
-                                            print ('ACESSO PERMITIDO')
+                                            print ('- ACESSO PERMITIDO -')
                                             print ('-------------------')
                                             cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
                                             con.commit()
@@ -368,8 +369,9 @@ class Jogadores:
                                             exit()
                                 else:
                                     sleep(1)
-                                    print ('ACESSO NEGADO')
+                                    print ('- ACESSO NEGADO -')
                                     return Menu_acesso(email)
+
 
 class Carteira:
     def __init__(self,email) -> None:
@@ -392,6 +394,8 @@ class Carteira:
                         cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(self.email,))
                         for linha in cursor.fetchall():
                             if linha[1] == senha:
+                                print ('- ACESSO PERMITIDO -')
+                                print ('-------------------')
                                 while True:
                                     try:
                                         valor = float(input("SACAR:"))
@@ -409,15 +413,14 @@ class Carteira:
                                                 print ('Opss! Informe um valor maior que 0.')
                                                 continue
                                             elif valor <=x:
-                                                print('PROCESSANDO')
+                                                print('- PROCESSANDO -')
                                                 x-=valor
                                                 cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
                                                 con.commit()
-                                                print ('- VALOR REMOVIDO DE CARTEIRA -')
+                                                print (' VALOR REMOVIDO DA CARTEIRA ')
                                                 return Menu_acesso(self.email)
                             else:
                                 print('- ACESSO NEGADO -')
-                                print('------------------- ')
                                 return Menu_acesso(self.email) 
 
     def Depositar(self):
@@ -438,6 +441,8 @@ class Carteira:
                         cursor.execute('SELECT COUNT(email),senha FROM JOGADORES WHERE email=?',(f"{self.email}",))
                         for linha in cursor.fetchall():
                             if linha[1] == senha:
+                                print ('- ACESSO PERMITIDO -')
+                                print ('--------------------')
                                 while True:
                                     try:
                                         valor = float(input("DEPOSITAR:"))
@@ -449,7 +454,7 @@ class Carteira:
                                             print ('Só adicionamos valores menores, a Ð:200.')
                                             continue 
                                         elif valor <=0:
-                                            print ('Opss! Informe um valor maior que 0.')
+                                            print ('Opss! Informe um valor real maior que 0.')
                                             continue
                                         else:
                                             cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(self.email,))
@@ -458,11 +463,10 @@ class Carteira:
                                                 x += valor
                                             cursor.execute('UPDATE CARTEIRA SET DINAR = ? WHERE email=?',(x,self.email))
                                             con.commit()
-                                            print ('- VALOR ADICIONADO A CARTEIRA -')
+                                            print (' VALOR ADICIONADO A CARTEIRA ')
                                             return Menu_acesso(self.email)
                             else:
                                 print('- ACESSO NEGADO -')
-                                print('------------------- ')
                                 return Menu_acesso(self.email)
 
 
@@ -494,7 +498,7 @@ def Verificar(email):
                 else:
                     if aposta!=10 and aposta!=20 and aposta!=50 and aposta!=100 and aposta!=150:
                         sleep(1)
-                        print ('Opss! Requirimos que utilize os valoes dentro da tabela!')
+                        print ('Opss! Requirimos que utilize os valores dentro da tabela.')
                         continue
                     cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(email,))
                     for vlinha in cursor.fetchall():
@@ -515,13 +519,13 @@ def Guia(email):
             print (ex)
         else:
             print ('')
-            print ('ºººººººººººººººººººººººººººººººººººº')
+            print ('\033[0;36mºººººººººººººººººººººººººººººººººººº')
             print ('               DADOS                ')
-            print ('ºººººººººººººººººººººººººººººººººººº')
+            print ('ºººººººººººººººººººººººººººººººººººº\033[0;m')
             print ('O objetivo do jogo é simples você poderá apostar um valor de sua escolha, escolhera os números para representar a sua aposta e os dados \nsortearam valores aleatórios para sobrepor os números da sua aposta, se o valor sorteado e os números da sua aposta forem equivalentes.\nParabéns,você recebera o valor da sua aposta duplicado ou até mesmo quadruplicado.\nSenão você poderá tentar novamente por uma nova opurtunidade de turbinar sua carteira.')
             sleep(1)
             print ('- DIFICULDADE -')
-            print ('[1]Facíl\n 2 Dados serão usados para sobreposição do valor! Isso duplica sua aposta.')
+            print ('[1]Fácil\n 2 Dados serão usados para sobreposição do valor! Isso duplica sua aposta.')
             sleep(1)
             print ('[2]Médil\n 3 Dados serão usados para a sobreposição do valor! Isso triplica sua aposta.')
             sleep(1)
@@ -534,12 +538,10 @@ def Guia(email):
                     conta1.Facil()
                 if fase =='2':
                     conta1= Dado(email,Verificar(email))
-                    conta1.Medio()
-                    pass 
+                    conta1.Medio() 
                 if fase =='3':
                     conta1= Dado(email,Verificar(email))
-                    conta1.Dificil()
-                    pass 
+                    conta1.Dificil() 
                 else: 
                     print(' AÇÃO INVÁLIDA ')
                     continue
@@ -581,7 +583,7 @@ class Dado:
         self.email = email 
         self.aposta = aposta 
     def Facil(self):
-        print(' DICA: Os dados sortedos contém 6 lados, a soma total desses dados podem chegar até 12. Então escolha por números que sejam iguais a 12 ou menores que 12.')
+        print('\033[0;31m DICA: Os dados sortedos contém 6 lados, a soma total desses dados podem chegar até 12. Então escolha por números que sejam iguais a 12 ou menores que 12.\033[0;m')
         while True:
             try:
                 valor1 = int(input("1º NÚMERO PARA REPRESENTAR A APOSTA:"))
@@ -632,7 +634,7 @@ class Dado:
                             remover(self.email,self.aposta)
     
     def Medio(self):
-        print (' DICA: Os dados sortedos contém 12 lados, a soma total desses dados podem chegar até 36. Então escolha por números que sejam iguais ou menores que 36.')
+        print ('\033[0;31m DICA: Os dados sortedos contém 12 lados, a soma total desses dados podem chegar até 36. Então escolha por números que sejam iguais ou menores que 36.\033[0;m')
         while True:
             try:
                 valor1 = int(input("1º NÚMERO PARA REPRESENTAR A APOSTA:"))
@@ -656,7 +658,7 @@ class Dado:
                             else: 
                                 tupla_vazia = ()
                                 tupla_vazia = valor1, valor2, valor3 
-                                print (f'\033[31mO jogador escolheu os números {tupla_vazia[0]}, {tupla_vazia[1]}, {tupla_vazia[2]}  para representar sua aposta.') 
+                                print (f'O jogador escolheu os números {tupla_vazia[0]}, {tupla_vazia[1]}, {tupla_vazia[2]}  para representar sua aposta.') 
                                 print ('Serão sorteados 3 Dados de doze lados, a soma desses dados será a sobreposição equivalente ou não para a sua aposta.')
                                 sleep(1)
                                 x = random.randint(1,12)
@@ -701,7 +703,7 @@ class Dado:
                                     remover(self.email,self.aposta)
 
     def Dificil(self):
-        print (' DICA: Os dados sortedos contém 12 lados, a soma total desses dados podem chegar até 60. Então escolha por números que sejam iguais ou menores que 60.')
+        print ('\033[0;31m DICA: Os dados sortedos contém 12 lados, a soma total desses dados podem chegar até 60. Então escolha por números que sejam iguais ou menores que 60.\033[0;m')
         while True:
             try:
                 valor1 = int(input("1º NÚMERO PARA REPRESENTAR A APOSTA:"))
@@ -887,7 +889,7 @@ class Black_Jack:
                         print(f"Você acaba de perder: \033[0;32mÐ {metade_da_aposta}\033[0;m da sua carteira")
                         print ("\nObrigado por jogar conosco, até a proxima!\n")
                         remover(self.email,metade_da_aposta)
-                        sys.exit()
+
                     else:
                         print('\033[0;31mOpção inválida!\033[0;m')
                         continue 
@@ -899,19 +901,23 @@ class Black_Jack:
 
                 if playerpts > 21:
                     print(f'☹ LAMENTO! ☹\nSua sequência ultrapassou 21 pontos!\nVocê acaba de perder: \033[0;32mÐ {self.aposta}\033[0;m')
+                    print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
                     remover(self.email,self.aposta)
 
                 elif playerpts > dealerpts and playerpts <= 21:
                     valor_duplicado = int(self.aposta)*2  
                     print(f'PARABÉNS! VOCÊ QUEBROU A BANCA\nVOCÊ É O VENCEDOR(a)!\n\nE acaba de ganhar mais: Ð {valor_duplicado} da Banca.\nNESSA JOGADA VOCÊ SAIU COM: \033[0;32mÐ {valor_duplicado}\033[0;m')
+                    print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
                     aplicar(self.email,valor_duplicado)
 
                 elif dealerpts > 21:
                     print(f'A BANCA QUEBROU!\nA sequencia dela ultrapassou 21 pontos!\n Você acaba de ganhar mais: Ð {self.aposta} da Banca.\nNESSA JOGADA VOCÊ SAIU COM: \033[0;32mÐ {valor_duplicado}\033[0;m')
+                    print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
                     aplicar(self.email,valor_duplicado)
 
                 elif dealerpts > playerpts and dealerpts <= 21:  
                     print(f'A BANCA TE VENCEU!\nVocê acaba de perder: \033[0;32mÐ {self.aposta}\033[0;m')
+                    print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
                     remover(self.email,self.aposta)
 
                 elif playerpts == dealerpts:
@@ -924,3 +930,5 @@ class Black_Jack:
                     aplicar(self.email,metade_da_aposta)  
             else:
                 print(' \033[0;31mOPÇÃO INVÁLIDA!\033[0;m ')
+                continue
+
