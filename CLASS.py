@@ -205,12 +205,12 @@ class Jogadores:
                 else:
                     cursor.execute('SELECT COUNT (email), email FROM JOGADORES WHERE email = ?',(vemail,))
                     for linha in cursor.fetchall():
-                        if linha [0] == 0:
+                        if linha[0] == 0:
                             sleep(1)
                             print ('EMAIL NÃO ENCONTRADO!')
                             print ('---------------------')
                             return Menu()
-                        elif linha [0] == 1:
+                        elif linha[0] == 1:
                             sleep(1)
                             print ('- ENCONTRADO -')
                             print ('-------------------')
@@ -410,7 +410,7 @@ class Carteira:
                                                 print('SACAR, não pode ser executado Ð insuficiente.')
                                                 return Menu_acesso(self.email)
                                             elif valor <=0:
-                                                print ('Opss! Informe um valor maior que 0.')
+                                                print ('Opss! Informe um valor real maior que 0.')
                                                 continue
                                             elif valor <=x:
                                                 print('- PROCESSANDO -')
@@ -787,14 +787,14 @@ def Vericar_Black(email):
     except Error as ex:
         print (ex)
     else:
-        print('\033[0;33m-------------------\033[0;m')
-        print("\033[0;33mMOEDA       VALORES\033[0;m")
-        print('  \033[0;32mÐ\033[0;m ----------- \033[0;32m20\033[0;m')
-        print('  \033[0;32mÐ\033[0;m ----------- \033[0;32m50\033[0;m')
-        print('  \033[0;32mÐ\033[0;m ---------- \033[0;32m100\033[0;m')
-        print('  \033[0;32mÐ\033[0;m ---------- \033[0;32m500\033[0;m')
-        print('  \033[0;32mÐ\033[0;m --------- \033[0;32m1000\033[0;m')    
-        print('\033[0;33m==================\033[0;m\n')
+        print('\033[0;33m-------------------')
+        print(" MOEDA       VALORES")
+        print('  Ð ----------- 20')
+        print('  Ð ----------- 50')
+        print('  Ð ----------- 100')
+        print('  Ð ----------- 500')
+        print('  Ð ----------- 1000')    
+        print('==================\033[0;m\n')
         aposta = "0"
         while aposta!='20' and aposta!='50'and aposta!='100'and aposta!='500'and aposta!='1000':
             aposta = str(input('Analisando seu jogo e a carta da Banca,\nEscolha algum valor da tabela para apostar\n\033[0;33m>> \033[0;m'))
@@ -902,7 +902,7 @@ class Black_Jack:
                 if playerpts > 21:
                     print(f'☹ LAMENTO! ☹\nSua sequência ultrapassou 21 pontos!\nVocê acaba de perder: \033[0;32mÐ {self.aposta}\033[0;m')
                     print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
-                    remover(self.email,self.aposta)
+                    remover(self.email,int(self.aposta))
 
                 elif playerpts > dealerpts and playerpts <= 21:
                     valor_duplicado = int(self.aposta)*2  
@@ -918,7 +918,7 @@ class Black_Jack:
                 elif dealerpts > playerpts and dealerpts <= 21:  
                     print(f'A BANCA TE VENCEU!\nVocê acaba de perder: \033[0;32mÐ {self.aposta}\033[0;m')
                     print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
-                    remover(self.email,self.aposta)
+                    remover(self.email,int(self.aposta))
 
                 elif playerpts == dealerpts:
                     print('ORA ORA ORA... TIVEMOS UM EMPATE!\n(Cada um receberá metade do valor apostado)')
