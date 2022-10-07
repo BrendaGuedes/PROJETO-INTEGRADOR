@@ -25,7 +25,6 @@ def Senha():
     for i in range(tamanho_da_senha):
         senhasegura += choice(caracters)
     print(f' SENHA GERADA:\n {senhasegura} ') 
-    
     return senhasegura 
 
 def Dados(email):
