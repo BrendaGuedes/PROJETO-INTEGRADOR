@@ -1,5 +1,7 @@
+import sys
 import random
 import sqlite3
+from ast import Str
 from time import sleep
 from sqlite3 import Error
 from FUNÇOES import check,Senha,Dados
@@ -47,11 +49,12 @@ def Menu ():
                                 conta1 = Jogadores()
                                 conta1.Criar(vemail)
                                 exit()
+
         if x=='2':
             conta1 = Jogadores()
             conta1.Entrar()
             exit()
-            pass 
+
         if x=='0':
                 print ('GOLDEN ENCERRADO!')
                 exit()
@@ -93,6 +96,7 @@ def Menu_acesso(email):
                     print(' AÇÃO INVÁLIDA ')
                     c = str(input(' ------- AÇÃO ------- \n'))
                     continue 
+
         if x=='2':
             print ('\033[0;33m=======================')
             print ('  1- DADOS')
@@ -106,7 +110,8 @@ def Menu_acesso(email):
                 if j=='1':
                     Guia(email)
                 if j=='2':
-                    pass 
+                    conta1 = Black_Jack(email,Vericar_Black(email))
+                    conta1.Black() 
                 if j=='3':
                     pass 
                 if j=='4':
@@ -114,7 +119,8 @@ def Menu_acesso(email):
                 else: 
                     print(' AÇÃO INVÁLIDA ')
                     j = str(input(' ------- AÇÃO ------- \n'))
-                    continue 
+                    continue
+
         if x=='3':
             print ('\033[0;33m=======================')
             print ('  1- ALTERAR')
@@ -136,6 +142,7 @@ def Menu_acesso(email):
                     print(' AÇÃO INVÁLIDA ')
                     a = str(input(' ------- AÇÃO ------- \n'))
                     continue 
+
         if x=='0':
             print ('ENCERRADA AS APOSTAS!')
             exit()
@@ -145,7 +152,6 @@ def Menu_acesso(email):
             continue 
 
 class Jogadores:
-
     def Criar (self,vemail):
         try:
             con = sqlite3.connect ('CASSINO (1).db')
@@ -257,7 +263,7 @@ class Jogadores:
                                     print ('- ACESSO PERMITIDO -')
                                     print ('---------------------')
                                     while True:
-                                        n = input('1 - Alterar senha \n2 - Alterar nome \n3 - SAIR \n')
+                                        n = input('1 - ALTERAR SENHA \n2 - ALTERAR NOME \n3 - SAIR \n')
                                         if n == '1': 
                                             sleep(1)
                                             print ('- ALTERANDO SENHA -')
@@ -331,7 +337,6 @@ class Jogadores:
         except Error as ex:
             print (ex)
         else:
-            print(email)
             cursor.execute('SELECT * FROM JOGADORES')
             sleep(1)
             while True:
@@ -357,7 +362,7 @@ class Jogadores:
                                             print ('-------------------')
                                             cursor.execute('DELETE FROM JOGADORES WHERE email=?',(email,))  
                                             con.commit()
-                                            print ('- CONTA DELETADA -\nEsperamos que sua experiência tenha sido boa!\nConfirmamos que sua conta foi deletada do sistema, os dados referentes ao seu email foram todos apagados.')
+                                            print ('\033[0;31m- CONTA DELETADA -\nEsperamos que sua experiência tenha sido boa!\nConfirmamos que sua conta foi deletada do sistema, os dados referentes ao seu email foram todos apagados.\033[0;m')
                                             cursor.close()
                                             con.close()
                                             exit()
@@ -509,6 +514,7 @@ def Guia(email):
         except Error as ex:
             print (ex)
         else:
+            print ('')
             print ('ºººººººººººººººººººººººººººººººººººº')
             print ('               DADOS                ')
             print ('ºººººººººººººººººººººººººººººººººººº')
@@ -578,14 +584,14 @@ class Dado:
         print(' DICA: Os dados sortedos contém 6 lados, a soma total desses dados podem chegar até 12. Então escolha por números que sejam iguais a 12 ou menores que 12.')
         while True:
             try:
-                valor1 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                valor1 = int(input("1º NÚMERO PARA REPRESENTAR A APOSTA:"))
             except ValueError:
                 print("Opss! Inválido...")
                 continue
             else:
                 while True:
                     try:
-                        valor2 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                        valor2 = int(input("2º NÚMERO PARA REPRESENTAR A APOSTA:"))
                     except ValueError:
                         print("Opss! Inválido...")
                         continue
@@ -629,21 +635,21 @@ class Dado:
         print (' DICA: Os dados sortedos contém 12 lados, a soma total desses dados podem chegar até 36. Então escolha por números que sejam iguais ou menores que 36.')
         while True:
             try:
-                valor1 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                valor1 = int(input("1º NÚMERO PARA REPRESENTAR A APOSTA:"))
             except ValueError:
                 print("Opss! Inválido...")
                 continue
             else:
                 while True:
                     try:
-                        valor2 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                        valor2 = int(input("2º NÚMERO PARA REPRESENTAR A APOSTA:"))
                     except ValueError:
                         print("Opss! Inválido...")
                         continue
                     else:
                         while True:
                             try:
-                                valor3 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                                valor3 = int(input("3º NÚMERO PARA REPRESENTAR A APOSTA:"))
                             except ValueError:
                                 print("Opss! Inválido...")
                                 continue
@@ -698,21 +704,21 @@ class Dado:
         print (' DICA: Os dados sortedos contém 12 lados, a soma total desses dados podem chegar até 60. Então escolha por números que sejam iguais ou menores que 60.')
         while True:
             try:
-                valor1 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                valor1 = int(input("1º NÚMERO PARA REPRESENTAR A APOSTA:"))
             except ValueError:
                 print("Opss! Inválido...")
                 continue
             else:
                 while True:
                     try:
-                        valor2 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                        valor2 = int(input("2º NÚMERO PARA REPRESENTAR A APOSTA:"))
                     except ValueError:
                         print("Opss! Inválido...")
                         continue
                     else:
                         while True:
                             try:
-                                valor3 = int(input("NÚMERO PARA REPRESENTAR A APOSTA:"))
+                                valor3 = int(input("3º NÚMERO PARA REPRESENTAR A APOSTA:"))
                             except ValueError:
                                 print("Opss! Inválido...")
                                 continue
@@ -769,3 +775,152 @@ class Dado:
                                     sleep(1)
                                     print(f'O valor Ð:{self.aposta} foi retidado da carteira..\nPara reaver o valor JOGUE NOVAMENTE!')
                                     remover(self.email,self.aposta)
+
+
+def Vericar_Black(email):
+    try:
+        con = sqlite3.connect ('CASSINO (1).db')
+        con.execute('PRAGMA foreign_keys = 1') 
+        cursor = con.cursor()
+    except Error as ex:
+        print (ex)
+    else:
+        print('\033[0;33m-------------------\033[0;m')
+        print("\033[0;33mMOEDA       VALORES\033[0;m")
+        print('  \033[0;32mÐ\033[0;m ----------- \033[0;32m20\033[0;m')
+        print('  \033[0;32mÐ\033[0;m ----------- \033[0;32m50\033[0;m')
+        print('  \033[0;32mÐ\033[0;m ---------- \033[0;32m100\033[0;m')
+        print('  \033[0;32mÐ\033[0;m ---------- \033[0;32m500\033[0;m')
+        print('  \033[0;32mÐ\033[0;m --------- \033[0;32m1000\033[0;m')    
+        print('\033[0;33m==================\033[0;m\n')
+        aposta = "0"
+        while aposta!='20' and aposta!='50'and aposta!='100'and aposta!='500'and aposta!='1000':
+            aposta = str(input('Analisando seu jogo e a carta da Banca,\nEscolha algum valor da tabela para apostar\n\033[0;33m>> \033[0;m'))
+        cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(email,))
+        for vlinha in cursor.fetchall():
+            int(aposta)
+            x = vlinha[0]
+            if x>= int(aposta):
+                return aposta
+            if x <int(aposta):
+                print('APOSTA, não pode ser executado Ð insuficiente.')
+                return Menu_acesso(email)
+
+class Black_Jack:
+    def __init__(self,email,aposta) -> None:
+        self.email = email
+        self.aposta = aposta 
+    def Black(self):
+        A = 11
+        Q = 10
+        J = 10
+        K = 10
+        numbers = [ 2, 3, 4, 5, 6,
+                7, 8, 9, 10, Q, J, K, A]
+        suits = ["♣", "♦", "♥", "♠"]
+        tracinhofofo = ('\033[0;31m-=\033[0;m')*40
+        cartas = []
+        pontos = []
+        menuprincipal = '10'
+        print(f"{tracinhofofo}\n           \033[0;33m♣ ♦ ♥ ♠\033[0;m \033[0;1;4mBEM-VINDO(A) AO BLACKJACK (JOGO 21)!\033[0;m \033[0;33m♣ ♦ ♥ ♠\033[0;m\n{tracinhofofo}")
+        while menuprincipal != 'eeee100':
+            menuprincipal = str(input('\nMENU: \n[1] INSTRUÇÕES DO JOGO\n[2] JOGAR\n\n \033[0;34mDIGITE UMA DAS OPÇÕES ACIMA\033[0;m\n\033[0;33m>> \033[0;m'))
+            if menuprincipal == '1':
+                print(f"{tracinhofofo}\n                         INSTRUÇÕES DO JOGO:                 \n{tracinhofofo}")
+                print('\033[0;36mSeu objetivo no jogo é derrotar a Banca(dealer).\n'
+                'Para fazer isso, você deve ter uma sequência em que a pontuação seja mais elevada\ndo que a sequência do dealer,'
+                ' mas que não exceda21 pontos no valor total.\n'
+                'Como alternativa, você pode ganhar tendo uma pontuação menor\nquando o valor da mão do dealer ultrapassar 21 pontos.\n'
+                '\n\033[0;33m►\033[0;m \033[0;36mSe você desistir do jogo, perderá metade do valor apostado;\033[0;m\n'
+                '\033[0;33m►\033[0;m \033[0;36mQuando o valor total da sua mão for 22 ou mais,\nvocê automaticamente vai perder qualquer dinheiro apostado;\033[0;m\n'
+                '\033[0;33m►\033[0;m \033[0;36mCaso você ganhe, a Banca é obrigada a te dar o valor integral da aposta!\033[0;m')
+                continue
+            elif menuprincipal == '2':
+                print(f"{tracinhofofo}\n                               INICIANDO JOGO...                 \n{tracinhofofo}")
+                print('                      ¬¬¬¬¬¬¬¬¬¬  BOA SORTE! ¬¬¬¬¬¬¬¬¬¬  ')
+                print('\n\033[0;33m>>\033[0;m GANHANDO CARTAS...\n')
+                card1 = random.choice(numbers)
+                card_1 = random.choice(suits)
+                cartas.append(f"{card1}{card_1}")
+                pontos.append(card1)
+                print(f"Sua Primeira carta foi: \033[0;41m{card1}{card_1}\033[0;m")
+                card2 = random.choice(numbers)
+                card_2 = random.choice(suits)
+                cartas.append(f"{card2}{card_2}")
+                pontos.append(card2)
+                print(f"Sua segunda carta foi: \033[0;41m{card2}{card_2}\033[0;m")
+                print(f"O total da sua sequencia é de: \033[0;33m{sum(pontos)} pontos\033[0;m\n")
+                print(f"\n{tracinhofofo}\n          AGORA CHEGOU A VEZ DA BANCA(dealer) GANHAR CARTA...\n{tracinhofofo}")   
+                cardBk1 = random.choice(numbers)
+                card_Bk1 = random.choice(suits)
+                print(f"\nA primeira carta da Banca foi: \033[0;44m{cardBk1}{card_Bk1}\033[0;m")
+                print('\nA segunda carta da Banca ainda está virada\n')
+                print(f'\nO VALOR APOSTADO FOI: \033[0;32mÐ {self.aposta} \033[0;m\n')
+                opc = '10'
+                while opc != "3":
+                    opc = str(input("\033[0;34mSUA PRÓXIMA AÇÃO: \n[1]\033[0;m GANHAR MAIS CARTA\n\033[0;34m[2]\033[0;m MANTER PONTUAÇÃO ATUAL\n\033[0;34m[3]\033[0;m DESISTIR DO JOGO\n\033[0;33m>> \033[0;m"))
+                    if opc == "1":
+                        print('>\n>\n>\nGANHANDO MAIS UMA CARTA...\n')
+                        card3 = random.choice(numbers)
+                        card_3 = random.choice(suits)
+                        cartas.append(f"{card3}{card_3}")
+                        pontos.append(card3)
+                        print(f"Sua terceira carta foi: \033[0;41m{card3}{card_3}\033[0;m")
+                        print(f'Suas cartas foram: \033[0;31m{cartas}\033[0;m')
+                        print(f"O total da sua sequência atual é de: \033[0;33m{sum(pontos)} pontos\033[0;m\n")
+                        continue
+                    elif opc == "2":
+                        print (f"Você escolheu ficar com a pontuação de: \033[0;33m{sum(pontos)} pontos\033[0;m\n")
+                        print(f'Suas cartas foram: \033[0;31m{cartas}\033[0;m\n\n')
+                        vercardBK = "2"
+                        while vercardBK != "2":
+                            vercardBK = str(input("CHEGOU A HORA DE VER A SEGUNDA CARTA DA BANCA...\nAPERTE [2] PARA PROSSEGUIR\n\033[0;33m>> \033[0;m"))
+                        else:
+                            cardBk2 = random.choice(numbers)
+                            card_Bk2 = random.choice(suits)
+                            print(f"A segunda carta da Banca foi: \033[0;44m{cardBk2}{card_Bk2}\033[0;m")
+                            print(f"O total da sequencia da Banca é de: \033[0;33m{cardBk1+cardBk2} pontos\033[0;m\n")
+                        break
+                    elif opc == "3":
+                        print(f"{tracinhofofo}\n                    QUE PENA QUE VOCÊ DESISTIU...\n{tracinhofofo}\n")
+                        metade_da_aposta = int(self.aposta)/2
+                        print(f"Você acaba de perder: \033[0;32mÐ {metade_da_aposta}\033[0;m da sua carteira")
+                        print ("\nObrigado por jogar conosco, até a proxima!\n")
+                        remover(self.email,metade_da_aposta)
+                        sys.exit()
+                    else:
+                        print('\033[0;31mOpção inválida!\033[0;m')
+                        continue 
+                print(f"\n{tracinhofofo}\n                                RESULTADO!\n{tracinhofofo}\n")
+                playerpts = sum(pontos)
+                dealerpts = (cardBk1+cardBk2)
+                print(f'\033[0;33mVOCÊ\033[0;m ----------------- \033[0;33m{playerpts} PONTOS\033[0;m\n')
+                print(f'\033[0;33mBANCA\033[0;m ---------------- \033[0;33m{dealerpts} PONTOS\033[0;m\n')
+
+                if playerpts > 21:
+                    print(f'☹ LAMENTO! ☹\nSua sequência ultrapassou 21 pontos!\nVocê acaba de perder: \033[0;32mÐ {self.aposta}\033[0;m')
+                    remover(self.email,self.aposta)
+
+                elif playerpts > dealerpts and playerpts <= 21:
+                    valor_duplicado = int(self.aposta)*2  
+                    print(f'PARABÉNS! VOCÊ QUEBROU A BANCA\nVOCÊ É O VENCEDOR(a)!\n\nE acaba de ganhar mais: Ð {valor_duplicado} da Banca.\nNESSA JOGADA VOCÊ SAIU COM: \033[0;32mÐ {valor_duplicado}\033[0;m')
+                    aplicar(self.email,valor_duplicado)
+
+                elif dealerpts > 21:
+                    print(f'A BANCA QUEBROU!\nA sequencia dela ultrapassou 21 pontos!\n Você acaba de ganhar mais: Ð {self.aposta} da Banca.\nNESSA JOGADA VOCÊ SAIU COM: \033[0;32mÐ {valor_duplicado}\033[0;m')
+                    aplicar(self.email,valor_duplicado)
+
+                elif dealerpts > playerpts and dealerpts <= 21:  
+                    print(f'A BANCA TE VENCEU!\nVocê acaba de perder: \033[0;32mÐ {self.aposta}\033[0;m')
+                    remover(self.email,self.aposta)
+
+                elif playerpts == dealerpts:
+                    print('ORA ORA ORA... TIVEMOS UM EMPATE!\n(Cada um receberá metade do valor apostado)')
+                    print(f'\nO VALOR APOSTADO FOI: \033[0;32mÐ {self.aposta} \033[0;m\n')
+                    metade_da_aposta = int(self.aposta)/2
+                    print(f'VOCÊ ----------------- \033[0;32mÐ {metade_da_aposta}\033[0;m\n')
+                    print(f'BANCA ---------------- \033[0;32mÐ {metade_da_aposta}\033[0;m\n')
+                    print('\n \033[1;36m♣ ♦ ♥ ♠\033[0;m  \033[1;4;35mFIM DE JOGO!\033[0;m  \033[1;36m♣ ♦ ♥ ♠\033[0;m\n')
+                    aplicar(self.email,metade_da_aposta)  
+            else:
+                print(' \033[0;31mOPÇÃO INVÁLIDA!\033[0;m ')
