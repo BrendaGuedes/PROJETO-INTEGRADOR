@@ -151,6 +151,7 @@ def Menu_acesso(email):
             x = str(input(' ------- AÇÃO ------- \n'))
             continue 
 
+
 class Jogadores:
     def Criar (self,vemail):
         try:
