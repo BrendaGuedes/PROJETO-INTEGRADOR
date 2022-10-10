@@ -808,7 +808,7 @@ def Vericar_Black(email):
         print('==================\033[0;m\n')
         aposta = "0"
         while aposta!='20' and aposta!='50'and aposta!='100'and aposta!='500'and aposta!='1000':
-            aposta = str(input('Analisando seu jogo e a carta da Banca,\nEscolha algum valor da tabela para apostar\n\033[0;33m>> \033[0;m'))
+            aposta = str(input('Escolha algum valor da tabela para apostar\n\033[0;33m>> \033[0;m'))
         cursor.execute('SELECT DINAR FROM CARTEIRA WHERE email=?',(email,))
         for vlinha in cursor.fetchall():
             int(aposta)
