@@ -1,11 +1,11 @@
-import sys
 import random
 import sqlite3
+import sys
 from ast import Str
-from time import sleep
 from sqlite3 import Error
-from FUNÇOES import check,Senha,Dados
-from colorama import Fore, Back, Style
+from time import sleep
+from colorama import Back, Fore, Style
+from FUNÇOES import Dados, Senha, check
 
 normal = Fore.RESET
 
