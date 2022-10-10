@@ -120,7 +120,8 @@ def Menu_acesso(email):
                 if j=='3':
                     jogo = Roleta("", 0, emailparamim, 'CASSINO (1).db', 'con', 'cursor')
                     jogo.inicio()
-                    jogo.fichasEOpcoes() 
+                    jogo.fichasEOpcoes()
+                    return Menu_acesso(email) 
                 if j=='4':
                     return Menu_acesso(email)
                 else: 
