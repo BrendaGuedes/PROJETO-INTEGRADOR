@@ -1,0 +1,35 @@
+   PROJETO INTEGRADOR 
+------- CASSINO ------- 
+sistema de cadastro:
+Criar
+ - Nome Usuario  NN,
+ - Email  NN, U
+ - Senha  NN,
+Entrar 
+ - Alterar Dados da Conta  
+ - Deletar Conta
+ - Ver Dados da Conta 
+------
+carteira:  Dinar - moeda
+chave estrangeira - CASSINO  
+GUARDAR DADOS DE JOGO
+ - Depositar 
+ - Sacar
+------
+jogos:
+## ROLETA
+## POKER
+## BLACKJACK 
+-------
+sistema geral:
+ MENU 
+ - Criar 
+ - Entar 
+ - Sair 
+ MENU ACESSO
+  ENTRAR 
+ - nome 
+ - carteira 
+ - jogos 
+-------
+
